@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.1.7
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 04, 2016 at 06:22 PM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.20
+-- Host: localhost
+-- Generation Time: Nov 03, 2017 at 09:48 AM
+-- Server version: 5.1.73
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `pdm`
@@ -26,14 +26,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `departments`
 --
 
-CREATE TABLE `departments` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `departments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `departments`
@@ -46,7 +47,14 @@ INSERT INTO `departments` (`id`, `name`, `alias`, `address`, `created_at`, `upda
 (4, 'Phòng Đào tạo', 'PĐT', 'A03-304', '2016-09-26 23:26:34', '2016-09-26 23:26:34'),
 (5, 'Phòng KHCN & HTPT', 'PKHCN&HTPT', 'A03-305', '2016-09-26 23:27:09', '2016-09-26 23:27:09'),
 (6, 'Phòng Kế hoạch Tài chính', 'PKHTC', 'A03-306', '2016-09-26 23:27:24', '2016-09-26 23:27:24'),
-(7, 'Phòng Công tác sinh viên ', 'PCTSV', 'A03-307', '2016-09-26 23:27:41', '2016-09-26 23:27:41');
+(7, 'Phòng Công tác sinh viên ', 'PCTSV', 'A03-307', '2016-09-26 23:27:41', '2016-09-26 23:27:41'),
+(8, 'Trung tâm máy tính', 'TTMT', 'G2B, 144 Xuân Thủy, Cầu Giấy, Hà nội', '2016-12-18 18:40:19', '2016-12-18 18:40:19'),
+(9, 'Trung tâm Đảm bảo chất lượng', 'TTĐBCL', 'P 208A-E3', '2016-12-18 20:01:45', '2016-12-18 20:01:45'),
+(10, 'Ban giám hiệu', 'BGH', 'Nhà E3', '2017-09-20 18:30:29', '2017-09-20 18:30:51'),
+(11, 'Khoa Công nghệ Thông tin', 'Khoa-CNTT', 'Nhà E3', '2017-09-20 18:31:34', '2017-09-20 18:31:34'),
+(12, 'Khoa Điện tử Viễn thông', 'Khoa-ĐTVT', 'Nhà G2', '2017-09-20 18:31:54', '2017-09-20 18:31:54'),
+(13, 'Khoa Vật Lý Kỹ thuật & Công nghệ Nano', 'Khoa-VLKT', 'Nhà E4', '2017-09-20 18:32:30', '2017-09-20 18:32:30'),
+(14, 'Khoa Cơ học Kỹ thuật & Tự động hóa', 'Khoa-CKT', 'Nhà G2', '2017-09-20 18:32:59', '2017-09-20 18:32:59');
 
 -- --------------------------------------------------------
 
@@ -54,31 +62,44 @@ INSERT INTO `departments` (`id`, `name`, `alias`, `address`, `created_at`, `upda
 -- Table structure for table `documents`
 --
 
-CREATE TABLE `documents` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `documents` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `content` text COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `is_public` tinyint(1) NOT NULL DEFAULT '0',
-  `user_id` int(10) UNSIGNED NOT NULL,
-  `typedoc_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `typedoc_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `documents_user_id_foreign` (`user_id`),
+  KEY `documents_typedoc_id_foreign` (`typedoc_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `documents`
 --
 
 INSERT INTO `documents` (`id`, `title`, `content`, `description`, `is_public`, `user_id`, `typedoc_id`, `created_at`, `updated_at`) VALUES
-(5, 'Bài 2', 'laptrinhlaravel_bai2.pdf', 'Bài 2: Học laravel căn bản 1Phạm Thị Hà. \r\nBài 2: Học laravel căn bản 1Phạm Thị Hà. \r\nBài 2: Học laravel căn bản 1Phạm Thị Hà. \r\nBài 2: Học laravel căn bản 1Phạm Thị Hà. \r\nBài 2: Học laravel căn bản 1Phạm Thị Hà. ', 0, 2, 2, '2016-09-27 09:47:32', '2016-10-04 08:05:31'),
-(6, 'Bài 3', '[BTT] laptrinhlaravel_bai3.pdf', 'Bài 3: Học laravel căn bản 2', 0, 2, 2, '2016-09-27 09:48:02', '2016-09-27 09:48:02'),
-(7, 'Bài 4', '[BTT] laptrinhlaravel_bai4.pdf', 'Bài 4: Học laravel căn bản 3', 0, 2, 2, '2016-09-27 09:48:25', '2016-09-27 09:48:25'),
-(8, 'Bài 1', '[BTT] laptrinhlaravel_bai1.pdf', 'Bài 1: Cài đặt composer và laravel', 0, 7, 2, '2016-09-27 21:36:35', '2016-09-27 21:36:35'),
-(9, 'Bài 5', '[BTT] laptrinhlaravel_bai5.pdf', 'Bài 5: Lập trình laravel căn bản 5', 0, 7, 2, '2016-09-27 21:37:05', '2016-09-27 21:37:05'),
-(10, 'Bài 6', '[BTT] laptrinhlaravel_bai6.pdf', 'Bài 6: Lập trình laravel căn bản 6', 0, 6, 2, '2016-09-27 21:37:51', '2016-09-27 21:37:51'),
-(11, 'Bài 7', '[BTT] laptrinhlaravel_bai7.pdf', 'Bài 7: Lập trình laravel căn bản 7', 1, 6, 2, '2016-09-27 21:38:18', '2016-09-27 21:38:18'),
-(12, 'AAAAAAAA', '[PTCCB] laptrinhlaravel_bai7.pdf', 'Bài 2haffionngkwnvknnwnbnlmfk', 0, 6, 2, '2016-10-04 09:06:07', '2016-10-04 09:06:07');
+(21, 'Thời khóa biểu', '[BTT] tkb.xlsx', 'Thời khóa biểu', 1, 2, 4, '2016-12-18 14:08:46', '2016-12-18 14:08:46'),
+(22, 'Tài liệu thử', '[BTT] HuongDanThi.pdf', 'Tài liệu thi', 1, 2, 2, '2017-09-21 01:51:24', '2017-09-21 01:51:24'),
+(23, 'Tuần 6', '[Khoa-CNTT] Tuan6.pdf', 'Tuần 6', 1, 20, 2, '2017-11-03 08:30:20', '2017-11-03 08:30:20');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log`
+--
+
+CREATE TABLE IF NOT EXISTS `log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `create_at` datetime NOT NULL,
+  `IP` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `id_owner` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 -- --------------------------------------------------------
 
@@ -86,7 +107,7 @@ INSERT INTO `documents` (`id`, `title`, `content`, `description`, `is_public`, `
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE `migrations` (
+CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -108,12 +129,13 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 -- Table structure for table `roles`
 --
 
-CREATE TABLE `roles` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `roles`
@@ -130,12 +152,13 @@ INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `type_documents`
 --
 
-CREATE TABLE `type_documents` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `type_documents` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `type_documents`
@@ -153,96 +176,42 @@ INSERT INTO `type_documents` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'images/avatar.png',
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `department_id` int(10) UNSIGNED NOT NULL,
+  `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'public/images/avatar.png',
+  `role_id` int(10) unsigned NOT NULL DEFAULT '3',
+  `department_id` int(10) unsigned DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `users_role_id_foreign` (`role_id`),
+  KEY `users_department_id_foreign` (`department_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `avatar`, `role_id`, `department_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'admin', 'admin@gmail.com', '$2y$10$wpSqfinfm.CAg292BeNmB.ArPoYnBTRi4w9KswMpo9N79BpK0WQ6W', 'images/avatar/11382549_450176491822923_1547002734_n.jpg', 1, 1, 'GwIvumLXegy08IvvLhByCp6M4iXBYsYp2apP7ncgDdHkyyxoUiEqXjMIYGYP', NULL, '2016-10-04 09:05:10'),
-(6, 'Phạm Hà', 'phamha.uet@gmail.com', '$2y$10$XptYchptmoVgBsQYodXdB.8ER/m.KB0pjpk0XgjPtxXw/yy10Vx.2', 'images/avatar.png', 2, 2, 'ISuHRLdQjmmyBXNlhd6VikKv0ipWDwtTfaznrUnRaP2NcjOyxAw5Cs55mOgc', '2016-09-27 12:35:16', '2016-10-04 09:06:12'),
-(7, 'Thế Văn', 'thevanxda@gmail.com', '$2y$10$uttdFTvLw.X8abtgVVZM/uwDMLXakRVRgH5UQfsJOAQgGHS.N3x1O', 'images/avatar.png', 3, 1, '5kUFWdfynErr2T2CRbT9CtLKqHXfmj4Xs7fKrEHsCP0NrSlN6UTTwHDOba7r', '2016-09-27 12:35:41', '2016-10-04 08:38:54');
+INSERT INTO `users` (`id`, `username`, `name`, `email`, `password`, `avatar`, `role_id`, `department_id`, `remember_token`, `type`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'admin', 'Admin Docman', 'kevinkool9x@gmail.com', '$2y$10$KXrCyQe4tSlJ0zaPN6VD8efh31iJQ1pvAho4ZyqYMNowKobhru.T6', 'public/images/avatar/041702181216544018_219953954807409_1109699905_n.jpg', 1, 1, 'J3kojlHDuPZ3WgSMvHowqkpxyG9qw1e5ezAOnFs7DTgG7s3Gc5ROHw4mlKxI', 0, 1, NULL, '2016-12-18 20:15:50'),
+(10, 'ccne', 'Trung tâm Máy tính', 'ccne@vnu.edu.vn', '$2y$10$J6AuUKnUJfvtmwzNSFuS4e1tYoYCgvFDf2brlHn5DQIycI.PjQWYe', 'public/images/avatar.png', 3, 1, '573hpa0Cm2WLbRKIz0kQCgw1zKfm9oT4VLkgEemfk4x669SHYTOTgb2rXt3e', 1, 1, '2016-12-12 03:07:39', '2016-12-18 20:12:41'),
+(12, 'kiendh', 'Đỗ Hoàng Kiên', 'kiendh@vnu.edu.vn', '$2y$10$mBIm6OX9oY/4GMVrtB7mr.PYP3wWIZfNftMWBPH4R/elfHMnMe8KC', 'public/images/avatar.png', 1, 8, 'MyfMWoTBaki3jD88kZbWd4YeKmJ63tCkKdlZvp8Sm7IPjWh2c4kaYn2Dkwjn', 1, 1, '2016-12-18 18:35:10', '2016-12-18 20:09:14'),
+(13, 'trienpm', 'Phạm Minh Triển', 'trienpm@vnu.edu.vn', '$2y$10$ODFSTUsoV2S/xOr9CnpgieTDrXlMFFDUewkd/WFdtNH07uEe43nIq', 'public/images/avatar.png', 3, 5, NULL, 1, 1, '2016-12-18 18:57:03', '2016-12-18 18:57:27'),
+(14, 'khoatd', NULL, NULL, '$2y$10$skjv1W3.TJIA5UT3vArU6.w.Xr27UTAYPoLBEU.WXAr3M7dtYbLXi', 'public/images/avatar.png', 3, NULL, 'PcAf0hGMFbEYfdLx9oZ4MUJSD3HjWyNzEH8L237lZ4oakH37p08vVdWJccqu', 1, 1, '2016-12-18 19:57:54', '2016-12-18 19:59:27'),
+(15, 'ninhbt', 'Nguyễn Thị Hồng', 'hongnt1991@vnu.edu.vn', '$2y$10$xwK76EXljdUuoscyjxoxFecWmSDMsYxSIy7AlolNukTs2OrASwDYi', 'public/images/avatar.png', 2, 7, 'tOmXCeSonjh26nheBDPnrsbKH6vYNazGr8OYGAEzjYff04NTe0s0xVWb5Ypx', 1, 1, '2016-12-18 19:58:07', '2016-12-21 00:43:17'),
+(16, 'hungpd', 'Pham Duy Hung', 'hungpd@vnu.edu.vn', '$2y$10$/2tNjcHFRFMQHMMZTdpvaevmGAFr6KRPn5nkRd1oGHrC9q9vemzvi', 'public/images/avatar.png', 1, 3, NULL, 1, 1, '2016-12-18 19:58:41', '2017-09-28 19:09:11'),
+(17, 'hattt', 'Trần Thị Thu Hà', 'hattt@vnu.edu.vn', '$2y$10$krRzcLMdoyHKwqApR0SPGehsiA7z92AHhqIIDMFiU94obhELSjBeO', 'public/images/avatar.png', 2, 6, 'X79UYWbMq34srP6ZvjOny8Eokp62lRLfZtFxIibjiVlNChxKMIFRhjiTkkjf', 1, 1, '2016-12-19 20:46:55', '2016-12-21 00:42:41'),
+(18, 'vietanh', 'Nguyễn Việt Anh', 'vietanh@vnu.edu.vn', '$2y$10$IykjF3IFWpefKGmjgfc0T.4V9iJM3LI/Stku1tPUnpkhjg3/6ocei', 'public/images/avatar.png', 1, 8, 'sGUZTeGdqFTC0xIiULktf7EcGeuKb0Y5fjr46SIUJCqDl7aliGDVf9l5UeIj', 1, 1, '2017-03-01 00:51:41', '2017-11-02 21:01:19'),
+(19, 'hanv', 'Nguyễn Việt Hà', 'hanv@vnu.edu.vn', '$2y$10$TlFU5rZf1sQoUDMGf97UauOXZIbvF6BUM7UqjpPN3CVEIBrHfpOfS', 'public/images/avatar.png', 1, 10, NULL, 1, 1, '2017-09-20 19:38:27', '2017-09-25 21:36:05'),
+(20, 'vanthu', 'Nguyễn Văn Thư', 'nguyenvanthu@vnu.edu.vn', '$2y$10$JgWArc2ZCOe5SqYUUYcTQe6hS8tkbrRCJ0vAoosCGkCmj2SGzbdnK', 'public/images/avatar.png', 3, 11, 'L6enOiS5WOZWjgSG7FYPitt6yQsUP0zCfxhmVUPuqfaWEO36KtGhRcBPT5su', 0, 1, '2017-11-02 21:01:10', '2017-11-03 01:33:14');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `departments`
---
-ALTER TABLE `departments`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `documents`
---
-ALTER TABLE `documents`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `documents_user_id_foreign` (`user_id`),
-  ADD KEY `documents_typedoc_id_foreign` (`typedoc_id`);
-
---
--- Indexes for table `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `type_documents`
---
-ALTER TABLE `type_documents`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD KEY `users_role_id_foreign` (`role_id`),
-  ADD KEY `users_department_id_foreign` (`department_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `departments`
---
-ALTER TABLE `departments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `documents`
---
-ALTER TABLE `documents`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `roles`
---
-ALTER TABLE `roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `type_documents`
---
-ALTER TABLE `type_documents`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Constraints for dumped tables
 --
