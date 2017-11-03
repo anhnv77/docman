@@ -1,0 +1,30 @@
+input,select,textarea, button{
+    border-radius: 0px!important;
+}
+
+.leftForAvt{
+    padding: 10px;
+    border: 1px dotted #ddd;
+}
+
+.leftForAvt td{
+    font-size: 13px!important;
+}
+
+.leftForAvt .img-responsive{
+    margin: auto;
+}
+
+.rightForUpdate{
+    padding: 10px;
+    border: 1px dotted #ddd;
+}
+
+.needHide{
+    display: none;
+}
+
+.buttonChangePassword, .buttonChangeProfile{
+    font-size: 18px!important;
+    color: white!important;
+}

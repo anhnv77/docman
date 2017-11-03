@@ -1,0 +1,17 @@
+.login-button{
+    margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 15px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+
+    border-radius: 0px;
+}
+
+.panel-default,input{
+    border-radius: 0px!important;
+}
+
+.panel-heading{
+    font-size: 17px;
+}

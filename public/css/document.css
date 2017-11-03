@@ -1,0 +1,95 @@
+.ulLeft{
+  padding-top: 0px;
+  padding-bottom: 0px;
+  right: 0;
+  left: auto;
+}
+
+.ulLeft {
+    border-radius: 0px!important;
+}
+
+.forDeleteMany{
+  margin-top: 8px;
+  font-size: 12px;
+  display: none;
+}
+.forDeleteOne{
+  display: unset;
+}
+
+.rowForDeleteMany{
+  display: none;
+}
+
+.ulLeft li a{
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.rowForDeleteMany td:not(.center){
+  border: 0px!important;
+}
+
+#startAdvanceSearch{
+    border-radius: 0px; 
+    background-color: "#5882FA";
+}
+
+
+input,select,textarea, button,a {
+    border-radius: 0px!important;
+}
+
+#viewInformation{
+    margin: 0 auto;
+    height: auto;
+}
+
+#viewInformation .modal-dialog{
+    width: 80%;
+    height: auto;
+}
+
+#viewInformation .modal-dialog .modal-content{
+    height: auto;
+}
+
+.leftForInfor{
+    border-right: 1px solid #eee;
+}
+
+.rightForPreview{
+    height:100%;
+}
+
+.rightForPreview iframe{
+    width: 100%;
+    margin: 0 auto;
+    height:357px;
+}
+
+#seePreview{
+    margin-top: 30px; 
+    margin-bottom: 10px;
+}
+
+.seePreviewButton, .downloadButton{
+    color: #0080FF!important;
+}
+#linkDownload{
+    margin-bottom: 10px;
+}
+
+/* for add document */
+
+.addDocumentTA{
+    resize: none;
+}
+
+.type_file_image{
+    width: 20px;
+    height: auto;
+}
