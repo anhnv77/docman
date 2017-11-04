@@ -6,6 +6,7 @@
 @section('content')
 
     {!! Html::style('public/css/welcome_page.css') !!}
+    {!! Html::style('css/welcome_page.css') !!}
 
     <div class="row" style="{{ Auth::guest() ? 'margin-top: 60px' : ''}}">
         <div class="col-md-8 col-md-offset-2">

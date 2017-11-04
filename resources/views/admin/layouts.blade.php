@@ -27,6 +27,7 @@
 
     <!-- Styles -->
     {!! Html::style('public/css/app.css') !!}
+    {!! Html::style('css/app.css') !!}
     @yield(('style'))
 
     <!-- jQuery -->
@@ -34,6 +35,7 @@
 
     <!-- JavaScripts -->
     {!! Html::script('public/js/app.js') !!}
+    {!! Html::script('js/app.js') !!}
 </head>
 
 <body id="page-top" class="index">
