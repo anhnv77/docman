@@ -18,11 +18,20 @@ class TypeDocumentController extends Controller
      */
     public function index()
     {
-        $data = TypeDocument::all();
+        $model = new TypeDocument();
+        $data = TypeDocument::whereNull('parent')->get();
         $typedocuments = array();
-
         foreach ($data as $ele){
-            $ele->number_doc = DB::table("documents")->where("typedoc_id", $ele->id)->count();
+            $children = $model->getChildren($ele->id);
+            $c = 0;
+            if(count($children)){
+                foreach ($children as $child){
+                    $child->number_doc = DB::table("documents")->where("typedoc_id", $child->id)->count();
+                    $c+=$child->number_doc;
+                }
+                $ele->children = $children;
+            }
+            $ele->number_doc = $c;
             array_push($typedocuments, $ele);
         }
 

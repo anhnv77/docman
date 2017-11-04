@@ -4,12 +4,12 @@ function writeData(stt,ele){
     temp += ('<th class="center">' + stt + '</th>');
     temp += ('<th class="center"> <a href = "' + ele['link_download'] + '" title="Nhấn để tải tài liệu" class="linkNormal" target="_blank"> <img class="type_file_image" src="' + ele['type_file'] + '"></a></th>');
 
-    temp += ('<th> <a href = "javascript:void(0)" title="..." class="seeDocumentDetail linkNormal" data-id="' + ele['document_id'] + '"> ' + ele['title'] + '</a></th>');
-    temp += ('<th class="hidden-xs"> <a href = "javascript:void(0)" class="linkNormal" title="'+ ele['department_name']+ '">' + ele['department_alias'] + '</a></th>');
-    temp += ('<th class="hidden-xs hidden-md hidden-sm"><small>' + ele['user_name'] + '</small></th>');
+    temp += ('<th> <a href = "javascript:void(0)" title="'+ele['title']+'" class="linkNormal" data-id="' + ele['document_id'] + '"> ' + ele['title'] + '</a></th>');
+    temp += ('<th class="hidden-xs"><small>' + ele['sohieu'] + '</small> </th>');
+    temp += ('<th class="hidden-xs hidden-md hidden-sm"><small>' + ele['coquan'] + '</small></th>');
     temp += ('<th class="hidden-xs hidden-sm"><small>' + ele['type_document'] + '</small></th>');
-    temp += ('<th class="hidden-xs hidden-md hidden-sm"><small>' + (ele['is_public'] == 1 ? "Công khai" : "Nội bộ") + '</small></th>');
-    temp += ('<th class="hidden-xs hidden-md hidden-sm"> <a href = "javascript:void(0)" class="linkNormal" title="'+ ele['show_create_at']+ '"><small>' + ele['document_create_at'] + '</small></a></th>');
+    temp += ('<th class="hidden-xs hidden-md hidden-sm"><small>' + ele['date'] + '</small></th>');
+    temp += ('<th class="hidden-xs hidden-md hidden-sm"><small>' + ele['nguoiky'] + '</small></a></th>');
 
     if (ele['can_modify'] == 1){
         temp += ('<th class="center"> <a href="javascript:void(0)" title="..." class="forDeleteOne deleteDocuments" data-id=' + ele['document_id'] + '><i class="fa fa-remove"></i></a>');
@@ -37,6 +37,7 @@ var departmentFilter;
 var listDocuments;
 var seePreview;
 var deleteType;
+var textsearch;
 
 function makeAllCheck(checkornot){
     for (var i=(currentPage-1)*perPage; i<listDocuments.length && i<currentPage*perPage; i++){
@@ -465,8 +466,7 @@ function getDataForDocumentList(){
     startLoading(); 
 
     var href = window.location.href;
-
-    $.post(link+"/getDocumentList", {_token: token, start: JSON.stringify(dayMinFilter), end: JSON.stringify(dayMaxFilter), key: nameFilter, department_ID: departmentFilter}, function(){
+    $.post(link+"/getDocumentList", {_token: token, start: JSON.stringify(dayMinFilter), end: JSON.stringify(dayMaxFilter), key: nameFilter, department_ID: departmentFilter,text: textsearch}, function(){
 
     }).done(function(data){
         listDocuments = JSON.parse(data);
@@ -598,7 +598,7 @@ function setForAdvanceSearch(){
         $('#toDate').val("");
 
         $('#movationIcon').removeClass('caret-up');
-        $('#titleButtonSearch').html("Tìm kiếm");
+        $('#titleButtonSearch').html("Tìm kiếm nâng cao");
         $('#filterWhenNeed').slideUp('medium');
 
         $('#initailPart').css('border-bottom', '1px dotted #eee');
@@ -606,13 +606,14 @@ function setForAdvanceSearch(){
 
         notActiveAdvanceSearch();
     }else{
+        textsearch = "";
         if (nameFilter!=""){
             $('#nameFilter').val("");
             nameFilter="";
         }
         
         $('#movationIcon').addClass('caret-up');
-        $('#titleButtonSearch').html("Tắt tìm kiếm");
+        $('#titleButtonSearch').html("Tắt tìm kiếm nâng cao");
 
         $('#filterWhenNeed').slideDown('medium');
         
@@ -649,6 +650,13 @@ function captureChangeDepartment(){
     });
 }
 
+function search(){
+    $(document).off('click','#textsearch').on('click','#textsearch', function(){
+       textsearch = $('#textsearchinput').val();
+       getDataForDocumentList();
+    });
+}
+
 
 $(document).ready(function(){
     dayMinFilter = "";
@@ -660,8 +668,10 @@ $(document).ready(function(){
     departmentFilter = $("#selectDepartment").val();
     seePreview = 0;
     deleteType = 1;
-
+    textsearch = "";
+    search();
     setForAdvanceSearch();
     captureChooseAdvance();
     captureChangeDepartment();
+
 });

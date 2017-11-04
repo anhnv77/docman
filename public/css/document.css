@@ -93,3 +93,10 @@ input,select,textarea, button,a {
     width: 20px;
     height: auto;
 }
+.textsearch{
+}
+.search-form{
+}
+.search-form button{
+    margin-top: 7px;
+}

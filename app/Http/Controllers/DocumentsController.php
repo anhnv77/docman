@@ -60,6 +60,10 @@ class DocumentsController extends Controller
     public function getDocumentList(Request $R)
     { 
         if(Auth::user()->hasRole('user') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('manager')) {
+            $text = $R->text;
+            if ($text!=null && $text!=""){
+                $text = app('App\Http\Controllers\HandleAllCaller')->standardString(strip_tags($text));
+            }
 
             $key= $R->key;
 
@@ -94,15 +98,36 @@ class DocumentsController extends Controller
 
             $departmentFilter = $R->department_ID;
 
-            $data =  DB::table('documents')
-                        ->join('type_documents', 'documents.typedoc_id', '=', 'type_documents.id')
-                        ->select('documents.id AS document_id', 'title', 'description', 'content', 'is_public', 'user_id', 'typedoc_id', 'documents.created_at AS document_create_at', 'name as type_document')
-                        ->where('documents.created_at', '<=', $dayMax)
-                        ->where('documents.created_at', '>=', $dayMin)
-                        ->orderBy('documents.created_at', 'DESC')
-                        ->get();
-
+            if ($text!=null && $text!=""){
+                $data =  DB::table('documents')
+                    ->select('documents.id AS document_id', 'documents.*', 'documents.created_at AS document_create_at')
+                    ->where('title','like','%'.$text.'%')
+                    ->orWhere('coquan','like','%'.$text.'%')
+                    ->orWhere('nguoiky','like','%'.$text.'%')
+                    ->orWhere('sohieu','like','%'.$text.'%')
+                    ->orWhereRaw('DATE_FORMAT(documents.date, \'%d %m %Y\') LIKE \'%?%\'',[$text])
+                    ->get();
+            }else{
+                $data =  DB::table('documents')
+                    ->select('documents.id AS document_id', 'documents.*', 'documents.created_at AS document_create_at')
+                    ->where('documents.created_at', '<=', $dayMax)
+                    ->where('documents.created_at', '>=', $dayMin)
+                    ->orderBy('documents.created_at', 'DESC')
+                    ->get();
+            }
             $list = array();
+            if(!count($data)){
+                return json_encode($list);
+            }
+
+            $typemodel = new TypeDocument();
+            foreach($data as $d){
+                $type = $typemodel->where('id',$d->typedoc_id)->first();
+                $parent = $typemodel->where('id',$type->parent)->first();
+                $d->type_document = $parent->name.'/'.$type->name;
+            }
+
+
             $can_modify = 0;
 
             if ($data!=null && $data!=false){

@@ -14,7 +14,7 @@ return [
 	'document_edit' => 'Cập nhật',
 	'reset' => 'Đặt lại',
 	'no' => 'STT.',
-	'title' => 'Tiêu đề',
+	'title' => 'Trích yếu',
 	'user' => 'Đăng bởi',
 	'type' => 'Thể loại',
     'date' => 'Ngày đăng',

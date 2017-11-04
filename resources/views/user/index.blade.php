@@ -14,11 +14,15 @@
         <div class="content-search" >
             
             <div class="row" id="initailPart">
-                <div class="col-md-4 not-padding">
-                    <button class="pull-left btn btn-sm btn-primary" id="chooseAdvanceSearch">
-                        &nbsp <span id="titleButtonSearch"> {{ trans('documents.search') }} </span>
+                <div class="col-md-4 not-padding textsearch">
+                    <div class="search-form form-group">
+                        <input type="text" id="textsearchinput" class="form-control">
+                        <button class="btn btn-primary" id="textsearch">Tìm kiếm</button>
+                    </div>
+                    <a href="javascript:void(0)" class="pull-left " id="chooseAdvanceSearch">
+                        &nbsp <span id="titleButtonSearch"> Tìm kiếm nâng cao </span>
                         &nbsp<span class="caret " id="movationIcon"></span>
-                    </button>
+                    </a>
                 </div>
                 <div class="col-md-5">
                     
@@ -86,11 +90,11 @@
                         <th class="center" style="width: 4%" >{{ trans('documents.no') }}</th>
                         <th class="center" style="width: 5%">{{ trans('documents.file') }}</th>
                         <th style="width: 19%">{{ trans('documents.title') }}</th>
-                        <th style="width: 10%" class="hidden-xs">{{ trans('documents.department') }}</th>
-                        <th style="width: 16%" class="hidden-xs hidden-md hidden-sm">{{ trans('documents.user') }}</th>
-                        <th style="width: 15%" class="hidden-xs hidden-sm">{{ trans('documents.type') }}</th>
-                        <th style="width: 10%" class="hidden-xs hidden-md hidden-sm">{{ trans('documents.status') }}</th>
-                        <th style="width: 10%" class="hidden-xs hidden-md hidden-sm">{{ trans('documents.date') }}</th>
+                        <th style="width: 10%" class="hidden-xs">Số hiệu</th>
+                        <th style="width: 16%" class="hidden-xs hidden-md hidden-sm">Cơ quan ban hành</th>
+                        <th style="width: 15%" class="hidden-xs hidden-sm">Loại văn bản</th>
+                        <th style="width: 10%" class="hidden-xs hidden-md hidden-sm">Ngày ban hành</th>
+                        <th style="width: 10%" class="hidden-xs hidden-md hidden-sm">Người ký</th>
                         
                         <th style="width: 12%" id="option" class="center" colspan="2">
                                         
