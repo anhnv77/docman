@@ -541,14 +541,18 @@ class DocumentsController extends Controller
      */
     public function create()
     {
-        $typedocument = TypeDocument::lists('name', 'id');
+        $parent_types = TypeDocument::where('parent', null)->lists('name', 'id')->all();
+        $typedocument = array();
+        foreach ($parent_types as $key => $value) {
+            $typedocument[$value] = TypeDocument::where('parent', $key)->lists('name', 'id')->toArray();
+        }
 
         return view('user.create', compact('typedocument'));
     }
 
     private function standardNameFile($name_file){
         $name_file=$this->standardString($name_file);
-        
+
         $name_file= str_replace(array("ă","â","á","à","ả","ã","ạ","ă","ắ","ặ","ằ","ẳ","ẵ","â","ấ","ầ","ẩ","ẫ","ậ"), "a", $name_file);
         $name_file= str_replace(array("Á","À","Ả","Ã","Ạ","Ă","Ắ","Ặ","Ằ","Ẳ","Ẵ","Â","Ấ","Ầ","Ẩ","Ẫ","Ậ"), "A",$name_file);
         $name_file= str_replace("đ", "d",$name_file);
@@ -594,6 +598,26 @@ class DocumentsController extends Controller
     public function store(Request $request)
     {
         if ($request->hasFile('content')){
+            $sohieu = stripslashes($request->sohieu);
+            if($sohieu == "" || $sohieu == null){
+                return 0;
+            }
+
+            $coquan = stripslashes($request->coquan);
+            if($coquan == "" || $coquan == null){
+                return 0;
+            }
+
+            $nguoiky = stripslashes($request->nguoiky);
+            if($nguoiky == "" || $nguoiky == null){
+                return 0;
+            }
+
+            $date = stripslashes($request->date);
+            if($date == "" || $date == null){
+                return 0;
+            }
+              
             $title = stripslashes($request->title);
             if($title == "" || $title == null){
                 return 0;
@@ -641,6 +665,10 @@ class DocumentsController extends Controller
             $document->is_public = $secure;
             $document->user_id = Auth::user()->id;
             $document->typedoc_id = $typedoc_id;
+            $document->sohieu =  $sohieu;
+            $document->date = $date;
+            $document->nguoiky =  $nguoiky;
+            $document->coquan =  $coquan;
 
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $document->created_at = Carbon::now();
