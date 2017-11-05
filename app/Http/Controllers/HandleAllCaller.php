@@ -266,27 +266,22 @@ class HandleAllCaller extends Controller
             return -1;
         }
 
-        if ($online->name == null || $online->name == "" || $online->email == null || $online->email == "" || $online->department_id == null || $online->department_id == ""){
+        if ($online->name == null || $online->name == "" || $online->email == null || $online->email == "" ){
             
             $name = stripcslashes($R->name);
-            $department_id = stripcslashes($R->department);
+//            $department_id = stripcslashes($R->department);
             $email = stripcslashes($R->email);
 
-            if ($name == null || $name == "" || $email == null || $email == "" || $department_id == null || $department_id == "" || $department_id < 0){
+            if ($name == null || $name == "" || $email == null || $email == ""  ){
                 
                 return -1;
 
             }   
 
-            $test = Department::find($department_id);
-
-            if ($test === false || $test === null){
-                return -2;
-            }
 
             $online->name = $name;
             $online->email = $email;
-            $online->department_id = $department_id;
+//            $online->department_id = $department_id;
 
             $online->save();
 

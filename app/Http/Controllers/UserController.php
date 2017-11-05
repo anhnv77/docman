@@ -104,7 +104,7 @@ class UserController extends Controller
 
     public function create(){
         $data = DB::table("roles")->orderBy('id', 'DESC')->get();
-        $temp = array("", "Quản lý hệ thống", "Quản lý phòng", "Nhân viên");
+        $temp = array("", "Quản lý hệ thống", "Đăng bài", "Người dùng");
         $roles=array();
         foreach($data as $role){   
             $role->name = $temp[$role->id];
@@ -216,18 +216,6 @@ class UserController extends Controller
             return -1;
         }
 
-        if ($R->id_department !== null){
-            $id_department = $R->id_department;
-
-            $test = Department::find($id_department);
-
-            if ($test == null || $test == false){
-                return -1;
-            }
-        }else{
-            return -1;
-        }
-
         if ($R->id_role !== null){
             $id_role = $R->id_role;
 
@@ -245,12 +233,12 @@ class UserController extends Controller
         $hehe->name = $name;
         $hehe->password = Hash::make($password);
         $hehe->role_id = $id_role;
-        $hehe->department_id = $id_department;
+        $hehe->department_id = 1;
         $hehe->type = 0;
 
         $hehe->save();
 
-        app('App\Http\Controllers\LogController')->makeLog(12, array($name, $id_department));
+        app('App\Http\Controllers\LogController')->makeLog(12, array($name, $id_role));
 
         return 1;
 

@@ -74,7 +74,7 @@ function checkSubmitInfo(){
         var token = $('#token').val();
         startLoading();
 
-        $.post('submitAddInfo', {_token: token, name: fullname, email: email, department: department}, function(){
+        $.post('submitAddInfo', {_token: token, name: fullname, email: email}, function(){
             
         }).done(function(data){
             if (data==1){

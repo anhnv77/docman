@@ -26,18 +26,7 @@
                 <td style="width: 35%"><i class="fa fa-envelope"></i> &nbsp&nbsp<strong>Email:</strong></td>
                 <td> <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
             </tr>
-            <tr>
-                <td style="width: 35%"><i class="fa fa-institution"></i> &nbsp<strong>Phòng:</strong></td>
-                <td> {{ $user->nameDepartment }} </a></td>
-            </tr>
-            <tr>
-                <td style="width: 35%"><i class="fa fa-mortar-board"></i> &nbsp<strong>Chức vụ:</strong></td>
-                <td> {{ $user->nameValidation }} </a></td>
-            </tr>
-            <tr>
-                <td style="width: 35%"><i class="fa fa-book"></i> &nbsp&nbsp<strong>Tài liệu:</strong></td>
-                <td> {{ $user->numberDocument }}</td>
-            </tr>
+
             </tbody>
         </table>
 

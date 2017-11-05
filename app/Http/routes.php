@@ -29,12 +29,12 @@ Route::post('/login', 'HandleAllCaller@submitLoginForm');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' => ['admin']], function () {
     // Department Management
-    Route::get('departments', 'DepartmentController@index');
-    Route::get('departments/create', 'DepartmentController@create');
-    Route::get('departments/edit/{id?}', 'DepartmentController@edit');
-
-    Route::post('departments/startAddDepartment', 'DepartmentController@store');
-    Route::post('departments/edit/startEditDepartment', 'DepartmentController@update');
+//    Route::get('departments', 'DepartmentController@index');
+//    Route::get('departments/create', 'DepartmentController@create');
+//    Route::get('departments/edit/{id?}', 'DepartmentController@edit');
+//
+//    Route::post('departments/startAddDepartment', 'DepartmentController@store');
+//    Route::post('departments/edit/startEditDepartment', 'DepartmentController@update');
     
     // Dashboard
     Route::get('dashboard', [
@@ -50,13 +50,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' =>
     Route::post('users/startAddUser', 'UserController@startAddUser');
 
     // TypeDocument management
-    Route::get('typedocuments', 'TypeDocumentController@index');
-    Route::post('typedocuments/getInfoEdit', 'TypeDocumentController@getInfoEdit');
-    Route::post('typedocuments/submitInfoEdit', 'TypeDocumentController@submitInfoEdit');
-    Route::post('typedocuments/deleteType', 'TypeDocumentController@deleteType');
-
-    Route::get('typedocuments/create', 'TypeDocumentController@create');
-    Route::post('typedocuments/submitAddType', 'TypeDocumentController@submitAddType');
+//    Route::get('typedocuments', 'TypeDocumentController@index');
+//    Route::post('typedocuments/getInfoEdit', 'TypeDocumentController@getInfoEdit');
+//    Route::post('typedocuments/submitInfoEdit', 'TypeDocumentController@submitInfoEdit');
+//    Route::post('typedocuments/deleteType', 'TypeDocumentController@deleteType');
+//
+//    Route::get('typedocuments/create', 'TypeDocumentController@create');
+//    Route::post('typedocuments/submitAddType', 'TypeDocumentController@submitAddType');
 
     // Log
     Route::get('logs', 'LogController@index');
@@ -98,8 +98,8 @@ Route::group(['middleware' => ['auth', 'roles'], 'roles' => ['admin', 'user', 'm
 
     // My document:
 
-    Route::get('mydocuments', 'DocumentsController@mydocuments');
-    Route::post('mydocuments/getDocumentList', 'DocumentsController@getMyDocumentList');
+//    Route::get('mydocuments', 'DocumentsController@mydocuments');
+//    Route::post('mydocuments/getDocumentList', 'DocumentsController@getMyDocumentList');
 
     // Profile:
 

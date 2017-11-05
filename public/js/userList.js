@@ -5,9 +5,9 @@ function writeData(stt,ele){
     temp += ('<th>'+(ele['fullname']!= null && ele['fullname']!= "" ? ele['fullname'] : "---" ) +'</th>');
     temp += ('<th class="hidden-xs hidden-md hidden-sm">'+ele['username']+'</th>');
     temp += ('<th class="hidden-xs hidden-md hidden-sm"><small>'+(ele['email']!= null && ele['email']!= "" ? ele['email'] : "---" )+'</small></th>');
-    temp += ('<th ><a class="linkNormal" title="'+ele['department_name']+'">'+ele['department_alias']+'</a></th>');
-    temp += ('<th ><small>'+ele['user_role']+'</small></th>');
-    temp += ('<th class="hidden-xs hidden-md hidden-sm">'+ele['number_document']+'</th>');
+    // temp += ('<th ><a class="linkNormal" title="'+ele['department_name']+'">'+ele['department_alias']+'</a></th>');
+    // temp += ('<th ><small>'+ele['user_role']+'</small></th>');
+    // temp += ('<th class="hidden-xs hidden-md hidden-sm">'+ele['number_document']+'</th>');
     if (ele['can_modify'] == 1){
         temp += ('<th class="center"><a class="editUsers" data-id="'+ele['id_user']+'" href = "javascript:void(0)" > <i class="fa fa-edit"></i></a></th>');
     } else{

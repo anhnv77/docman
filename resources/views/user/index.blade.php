@@ -40,12 +40,12 @@
                                 if ($cats[$i]->id != $select){
                                     echo "<option class='parent' value = ".$cats[$i]->id."><strong> ".$cats[$i]->name."</strong></option>";
                                     foreach ($cats[$i]->children as $child){
-                                        echo "<option class='child' value = ".$child->id."> ".$child->name."</option>";
+                                        echo "<option class='child' value = ".$child->id."> ".$cats[$i]->name.'/'.$child->name."</option>";
                                     }
                                 }else{
-                                    echo "<option class='parent' value = ".$cats[$i]->id." selected><strong>a ".$cats[$i]->name."</strong></option>";
+                                    echo "<option class='parent' value = ".$cats[$i]->id." selected><strong> ".$cats[$i]->name."</strong></option>";
                                     foreach ($cats[$i]->children as $child){
-                                        echo "<option class='child' value = ".$child->id."> ".$child->name."</option>";
+                                        echo "<option class='child' value = ".$child->id."> ".$cats[$i]->name.'/'.$child->name."</option>";
                                     }
                                 }
                             }

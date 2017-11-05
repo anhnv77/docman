@@ -29,18 +29,7 @@
                         </div>
                     </div>     
 
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="EmailNewUser">Chọn phòng ban (*)</label>
-                        <div class="col-md-6">
-                            <select id="DepartmentNewUser" class="form-control">
-                                <option value=0>- Chọn phòng của bạn -</option>
-                                @foreach ($departmentList as $ele)
-                                    <option value="{{ $ele->id }}" {{ $ele->id == $oldDepartment ?  "selected" : "" }}>{{$ele->name}}</option>
-                                @endforeach
-                                
-                            </select>
-                        </div>
-                    </div>  
+
                
                 </div>
 

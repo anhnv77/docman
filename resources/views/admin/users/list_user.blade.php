@@ -21,25 +21,7 @@
                 </div>
                 <div class="col-md-6">
                 </div>
-                <div class="col-md-3 not-padding" id="chooseDepartment">
-                    <small class="pull-right">Lọc theo phòng ban</small><br>
-                    <select class='form-control input-sm pull-right' id="selectDepartment">
 
-                        <option value=0 <?php if ($select == 0) echo "selected" ?>> 
-                            - Tất cả phòng ban - 
-                        </option>
-
-                        <?php
-                            for ($i=0; $i<count($department); $i++){
-                                if ($department[$i]->id != $select){
-                                    echo "<option value = ".$department[$i]->id."> ".$department[$i]->alias."</option>";
-                                }else{
-                                    echo "<option value = ".$department[$i]->id." selected> ".$department[$i]->alias."</option>";
-                                }
-                            }
-                        ?>
-                    </select>   
-                </div>
                 <br>
             </div>
         </div>
@@ -52,10 +34,7 @@
                         <th style="width: 20%">Họ và tên</th>
                         <th style="width: 14%" class="hidden-xs hidden-md hidden-sm">Tên đăng nhập</th>
                         <th style="width: 19%" class="hidden-xs hidden-md hidden-sm">Địa chỉ Email</th>
-                        <th style="width: 13%">Phòng ban</th>
-                        <th style="width: 13%">Chức vụ</th>
-                        <th style="width: 11%" class="hidden-xs hidden-md hidden-sm">Số tài liệu</th>
-                        
+
                         <th class="center" style="width: 5.5%">Sửa</th>
                     </tr>
                 </thead>

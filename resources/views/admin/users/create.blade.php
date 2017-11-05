@@ -37,24 +37,11 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-9 ">
-                <div class="form-group">
-                    <label class="col-md-8 control-label" style="margin-left: -15px;">Phòng trực thuộc</label>
-                    <select class="form-control" name="role" id="chooseDepartment">
-                        <option value=0>- Vui lòng chọn -</option>
-                        @foreach($department as $ele)
-                        <option value="{{$ele->id}}">{{$ele->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-9 ">
                 <div class="form-group">
-                    <label class="col-md-4 control-label" style="margin-left: -15px;">Chức vụ</label>
+                    <label class="col-md-4 control-label" style="margin-left: -15px;">Quyền</label>
                     <select class="form-control" name="role" id="chooseValidation">
                         @foreach($roles as $role)
                         <option value="{{$role->id}}" >{{$role->name}}</option>
