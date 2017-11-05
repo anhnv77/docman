@@ -29,7 +29,7 @@ class DocumentsController extends Controller
     {   
         $data = DB::table("departments")->select('id', 'alias')->get();
         $model = new TypeDocument();
-        $cats = $model->getParent();
+        $cats = $model->getParents();
         foreach ($cats as $cat){
             $cat->children = $model->getChildren($cat->id);
         }
@@ -205,8 +205,9 @@ class DocumentsController extends Controller
                         $ele->can_modify = $can_modify;
                         $ele->show_create_at = $this->standardTime($ele->document_create_at);
                         $ele->document_create_at = $this->standardDate($ele->document_create_at);
-                        
-                        $file_location = 'public/documents/'.$ele->content;
+
+
+                        $file_location = 'public/documents/'.$ele->path. '/' .$ele->content;
 
                         $type_file = pathinfo($file_location, PATHINFO_EXTENSION);
 
@@ -546,14 +547,18 @@ class DocumentsController extends Controller
      */
     public function create()
     {
-        $typedocument = TypeDocument::lists('name', 'id');
+        $parent_types = TypeDocument::where('parent', null)->lists('name', 'id')->all();
+        $typedocument = array();
+        foreach ($parent_types as $key => $value) {
+            $typedocument[$value] = TypeDocument::where('parent', $key)->lists('name', 'id')->toArray();
+        }
 
         return view('user.create', compact('typedocument'));
     }
 
     private function standardNameFile($name_file){
         $name_file=$this->standardString($name_file);
-        
+
         $name_file= str_replace(array("ă","â","á","à","ả","ã","ạ","ă","ắ","ặ","ằ","ẳ","ẵ","â","ấ","ầ","ẩ","ẫ","ậ"), "a", $name_file);
         $name_file= str_replace(array("Á","À","Ả","Ã","Ạ","Ă","Ắ","Ặ","Ằ","Ẳ","Ẵ","Â","Ấ","Ầ","Ẩ","Ẫ","Ậ"), "A",$name_file);
         $name_file= str_replace("đ", "d",$name_file);
@@ -599,6 +604,26 @@ class DocumentsController extends Controller
     public function store(Request $request)
     {
         if ($request->hasFile('content')){
+            $sohieu = stripslashes($request->sohieu);
+            if($sohieu == "" || $sohieu == null){
+                return 0;
+            }
+
+            $coquan = stripslashes($request->coquan);
+            if($coquan == "" || $coquan == null){
+                return 0;
+            }
+
+            $nguoiky = stripslashes($request->nguoiky);
+            if($nguoiky == "" || $nguoiky == null){
+                return 0;
+            }
+
+            $date = stripslashes($request->date);
+            if($date == "" || $date == null){
+                return 0;
+            }
+              
             $title = stripslashes($request->title);
             if($title == "" || $title == null){
                 return 0;
@@ -632,7 +657,7 @@ class DocumentsController extends Controller
             // create document with user current
             $document = new Document;
             $document->title = $title;
-            
+
             //get name file
             $file = $request->file('content');
 //            $file_name = '[' . $department_user . ']' . ' ' . $file->getClientOriginalName();
@@ -640,13 +665,26 @@ class DocumentsController extends Controller
             $file_name = $this->standardNameFile($file_name);
 
             //chuyển file sang folder
-            $request->file('content')->move(base_path() . '/public/documents/', $file_name);
+            $doctype_m = new TypeDocument();
+            $parent_type_id = $doctype_m->getParent($typedoc_id)->id;
+            $current_month_year = Carbon::now()->month . '-' . Carbon::now()->year;
+            if ($parent_type_id == 4){
+                $document->path =  'vanbandi/' . $current_month_year;
+                $request->file('content')->move(base_path() . '/public/documents/vanbandi/' . $current_month_year, $file_name);
+            } else if ($parent_type_id == 5){
+                $document->path =  'vanbanden/' . $current_month_year;
+                $request->file('content')->move(base_path() . '/public/documents/vanbanden/' . $current_month_year, $file_name);
+            }
 
             $document->content =  $file_name;
             $document->description = $description;
             $document->is_public = $secure;
             $document->user_id = Auth::user()->id;
             $document->typedoc_id = $typedoc_id;
+            $document->sohieu =  $sohieu;
+            $document->date = $date;
+            $document->nguoiky =  $nguoiky;
+            $document->coquan =  $coquan;
 
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $document->created_at = Carbon::now();

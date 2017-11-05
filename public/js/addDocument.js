@@ -41,6 +41,14 @@ function errorHandlerUpload(e){
     alert("Thêm tài liệu thất bại! Vui lòng thử lại sau!");
 }
 
+function isValidDate(dateString) {
+    var regEx = /^\d{4}-\d{2}-\d{2}$/;
+    if(!dateString.match(regEx)) return false;  // Invalid format
+    var d = new Date(dateString);
+    if(!d.getTime()) return false; // Invalid date (or this could be epoch)
+    return d.toISOString().slice(0,10) === dateString;
+}
+
 function checkSubmit(){
 
     $(document).off('click', '.submitAddDocument').on('click', '.submitAddDocument', function(){
@@ -67,12 +75,48 @@ function checkSubmit(){
             return;
         }
 
+        if (checkAllSpace($('#sohieu').val())){
+            alert("Bạn chưa nhập số hiệu tài liệu.");
+
+            return;
+        }else{
+            sohieu = $('#sohieu').val();
+        }
+
         if (checkAllSpace($('#title').val())){
-            alert("Bạn chưa nhập tiêu đề tài liệu.");
+            alert("Bạn chưa nhập trích yếu tài liệu.");
 
             return;
         }else{
             name = $('#title').val();
+        }
+
+        if (checkAllSpace($('#coquan').val())){
+            alert("Bạn chưa nhập cơ quan ban hành.");
+
+            return;
+        }else{
+            coquan = $('#coquan').val();
+        }
+
+        if (checkAllSpace($('#date').val())){
+            alert("Bạn chưa nhập ngày ban hành.");
+
+            return;
+        }else{
+            if (!isValidDate($('#date').val())){
+              alert("Nhập sai ngày ban hành (yyyy-mm-dd).");
+              return;
+            }
+            date = $('#date').val();
+        }
+
+        if (checkAllSpace($('#nguoiky').val())){
+            alert("Bạn chưa nhập người ký.");
+
+            return;
+        }else{
+            nguoiky = $('#nguoiky').val();
         }
 
         if (checkAllSpace($('#description').val())){
@@ -83,12 +127,18 @@ function checkSubmit(){
             description = $('#description').val();
         }
 
-        id_type = $('#typedoc_id').val();
 
-        if (id_type < 0){
-            alert("Dữ liệu không hợp lệ!");
 
-            window.location.reload();
+        if (checkAllSpace($('#typedoc_id').val())){
+            alert("Bạn chưa chọn loại tài liệu.");
+            return;
+        } else {
+            if ($('#typedoc_id').val() < 0){
+                alert("Dữ liệu không hợp lệ!");
+                window.location.reload();
+            } else {
+                id_type = $('#typedoc_id').val();
+            }
         }
 
         if (secure >=0 && name !== false && description !== false && content === true && id_type >=0){
@@ -98,6 +148,10 @@ function checkSubmit(){
             var formDataa = new FormData($('#formUploadDocument')[0]);
             formDataa.append('_token', token);
 
+            formDataa.append('sohieu', sohieu);
+            formDataa.append('coquan', coquan);
+            formDataa.append('nguoiky', nguoiky);
+            formDataa.append('date', date);
             formDataa.append('typedoc_id', id_type);
             formDataa.append('secure', secure);
             formDataa.append('title', name);

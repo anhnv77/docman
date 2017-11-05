@@ -13,6 +13,15 @@
         <div class="row">
             <div class="col-md-12 ">
                 <div class="form-group">
+                {{ Form::label('sohieu', trans('documents.name_number')) }}
+                {!! Form::text('sohieu', null, ['class' => 'form-control', 'placeholder' => trans('documents.enter_name_number')]) !!}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="form-group">
                 {{ Form::label('title', trans('documents.name_document')) }}
                 {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => trans('documents.enter_name_document')]) !!}
                 </div>
@@ -22,9 +31,35 @@
         <div class="row">
             <div class="col-md-12 ">
                 <div class="form-group">
-                
-        		{{ Form::label('typedoc_id', trans('documents.name_typedocument')) }}
-        		{!! Form::select('typedoc_id', $typedocument, null, ['class' => 'form-control']) !!}
+                {{ Form::label('coquan', trans('documents.name_dept')) }}
+                {!! Form::text('coquan', null, ['class' => 'form-control', 'placeholder' => trans('documents.enter_dept')]) !!}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="form-group">
+                {{ Form::label('date', trans('documents.name_date')) }}
+                {!! Form::text('date', null, ['class' => 'form-control', 'placeholder' => trans('documents.enter_date')]) !!}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="form-group">
+                {{ Form::label('nguoiky', trans('documents.name_signed')) }}
+                {!! Form::text('nguoiky', null, ['class' => 'form-control', 'placeholder' => trans('documents.enter_signed')]) !!}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="form-group">
+            		{{ Form::label('typedoc_id', trans('documents.name_typedocument')) }}
+            		{!! Form::select('typedoc_id', $typedocument, null, ['class' => 'form-control', 'placeholder' => 'Chọn loại tài liệu']) !!}
                 </div>
             </div>
         </div>
@@ -49,15 +84,15 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row hidden">
             <div class="col-md-12 ">
                 <div class="form-group">
 	                <label>Trạng thái tài liệu:</label>
 	                <label class="radio-inline">
-	                    <input name="is_public" class="is_private" value="0" type="radio" checked>Nội bộ
+	                    <input name="is_public" class="is_private" value="0" type="radio">Nội bộ
 	                </label>
 	                <label class="radio-inline">
-	                    <input name="is_public" class="is_public" value="1"  type="radio">Công khai
+	                    <input name="is_public" class="is_public" value="1"  type="radio" checked>Công khai
 	                </label>
                 </div>
             </div>
