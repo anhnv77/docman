@@ -100,3 +100,11 @@ input,select,textarea, button,a {
 .search-form button{
     margin-top: 7px;
 }
+
+.parent{
+    font-weight: bold;
+}
+.child{
+    font-weight: normal;
+    margin-left: 10px;
+}

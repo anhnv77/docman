@@ -28,7 +28,7 @@ return [
     'search_by_name' => 'Tìm kiếm theo tên',
     'filter_from' => 'Lọc từ ngày',
     'filter_to' => 'Đến trước ngày',
-    'all_department' => 'Tất cả phòng ban',
+    'all_department' => 'Tất cả',
     'status' => "Trạng thái",
     'back' => "Trở về",
     'file' => "File"

@@ -29,18 +29,24 @@
                 </div>
 
                 <div class="col-md-3 not-padding" id="chooseDepartment">
-                    <select class='form-control input-sm pull-right' id="selectDepartment">
+                    <select class='form-control input-sm pull-right parent' id="selectDepartment">
 
-                        <option value=0 <?php if ($select == 0) echo "selected"; ?>> 
-                            - {{ trans('documents.all_department') }} - 
+                        <option class='parent' value=0 <?php if ($select == 0) echo "selected"; ?>>
+                            <strong>- {{ trans('documents.all_department') }} - </strong>
                         </option>
 
                         <?php
-                            for ($i=0; $i<count($data); $i++){
-                                if ($data[$i]->id != $select){
-                                    echo "<option value = ".$data[$i]->id."> ".$data[$i]->alias."</option>";
+                            for ($i=0; $i<count($cats); $i++){
+                                if ($cats[$i]->id != $select){
+                                    echo "<option class='parent' value = ".$cats[$i]->id."><strong> ".$cats[$i]->name."</strong></option>";
+                                    foreach ($cats[$i]->children as $child){
+                                        echo "<option class='child' value = ".$child->id."> ".$child->name."</option>";
+                                    }
                                 }else{
-                                    echo "<option value = ".$data[$i]->id." selected> ".$data[$i]->alias."</option>";
+                                    echo "<option class='parent' value = ".$cats[$i]->id." selected><strong>a ".$cats[$i]->name."</strong></option>";
+                                    foreach ($cats[$i]->children as $child){
+                                        echo "<option class='child' value = ".$child->id."> ".$child->name."</option>";
+                                    }
                                 }
                             }
                         ?>

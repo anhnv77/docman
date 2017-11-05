@@ -28,8 +28,13 @@ class DocumentsController extends Controller
     public function index($select)
     {   
         $data = DB::table("departments")->select('id', 'alias')->get();
+        $model = new TypeDocument();
+        $cats = $model->getParent();
+        foreach ($cats as $cat){
+            $cat->children = $model->getChildren($cat->id);
+        }
 
-        return view('user.index', compact('data', 'select'));
+        return view('user.index', compact('cats', 'select'));
     }
 
     private function getUserAndDepartments($ele){
@@ -630,7 +635,8 @@ class DocumentsController extends Controller
             
             //get name file
             $file = $request->file('content');
-            $file_name = '[' . $department_user . ']' . ' ' . $file->getClientOriginalName();
+//            $file_name = '[' . $department_user . ']' . ' ' . $file->getClientOriginalName();
+            $file_name = $file->getClientOriginalName();
             $file_name = $this->standardNameFile($file_name);
 
             //chuyển file sang folder
