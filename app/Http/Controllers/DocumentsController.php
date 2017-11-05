@@ -200,8 +200,9 @@ class DocumentsController extends Controller
                         $ele->can_modify = $can_modify;
                         $ele->show_create_at = $this->standardTime($ele->document_create_at);
                         $ele->document_create_at = $this->standardDate($ele->document_create_at);
-                        
-                        $file_location = 'public/documents/'.$ele->content;
+
+
+                        $file_location = 'public/documents/'.$ele->path. '/' .$ele->content;
 
                         $type_file = pathinfo($file_location, PATHINFO_EXTENSION);
 
@@ -651,14 +652,23 @@ class DocumentsController extends Controller
             // create document with user current
             $document = new Document;
             $document->title = $title;
-            
+
             //get name file
             $file = $request->file('content');
             $file_name = '[' . $department_user . ']' . ' ' . $file->getClientOriginalName();
             $file_name = $this->standardNameFile($file_name);
 
             //chuyển file sang folder
-            $request->file('content')->move(base_path() . '/public/documents/', $file_name);
+            $doctype_m = new TypeDocument();
+            $parent_type_id = $doctype_m->getParent($typedoc_id)->id;
+            $current_month_year = Carbon::now()->month . '-' . Carbon::now()->year;
+            if ($parent_type_id == 4){
+                $document->path =  'vanbandi/' . $current_month_year;
+                $request->file('content')->move(base_path() . '/public/documents/vanbandi/' . $current_month_year, $file_name);
+            } else if ($parent_type_id == 5){
+                $document->path =  'vanbanden/' . $current_month_year;
+                $request->file('content')->move(base_path() . '/public/documents/vanbanden/' . $current_month_year, $file_name);
+            }
 
             $document->content =  $file_name;
             $document->description = $description;

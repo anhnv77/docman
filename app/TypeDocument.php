@@ -16,4 +16,10 @@ class TypeDocument extends Model
         $children = $this->where('parent',$id)->get();
         return $children;
     }
+
+    public function getParent($id){
+        $children = $this->where('id',$id)->get()->first();
+        $parent = $this->where('id', $children->parent)->first();
+        return $parent;
+    }
 }
