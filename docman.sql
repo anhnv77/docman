@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.73, for redhat-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
 --
 -- Host: localhost    Database: docman
 -- ------------------------------------------------------
--- Server version	5.1.73
+-- Server version	5.7.20-0ubuntu0.17.10.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,50 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `category`
+-- Table structure for table `departments`
 --
 
-DROP TABLE IF EXISTS `category`;
+DROP TABLE IF EXISTS `departments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `category` (
+CREATE TABLE `departments` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `category`
+-- Dumping data for table `departments`
 --
 
-LOCK TABLES `category` WRITE;
-/*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (2,'Đề thi mẫu'),(3,'Lịch học, lịch thi'),(4,'Học bổng');
-/*!40000 ALTER TABLE `category` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `document_group`
---
-
-DROP TABLE IF EXISTS `document_group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `document_group` (
-  `id_valid_group` int(11) NOT NULL,
-  `id_document` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `document_group`
---
-
-LOCK TABLES `document_group` WRITE;
-/*!40000 ALTER TABLE `document_group` DISABLE KEYS */;
-INSERT INTO `document_group` VALUES (5,42),(1,42),(4,42),(1,43),(5,43),(1,45),(5,45),(1,46),(1,47),(5,47),(4,47);
-/*!40000 ALTER TABLE `document_group` ENABLE KEYS */;
+LOCK TABLES `departments` WRITE;
+/*!40000 ALTER TABLE `departments` DISABLE KEYS */;
+INSERT INTO `departments` VALUES (1,'Ban Thanh Tra','BTT','A03-301','2016-09-26 23:24:07','2016-09-26 23:24:07'),(2,'Phòng Tổ chức Cán bộ','PTCCB','A03-302','2016-09-26 23:24:24','2016-09-26 23:24:24'),(3,'Phòng Hành chính - Quản trị','PHC-QT','A03-303','2016-09-26 23:26:18','2016-09-26 23:26:18'),(4,'Phòng Đào tạo','PĐT','A03-304','2016-09-26 23:26:34','2016-09-26 23:26:34'),(5,'Phòng KHCN & HTPT','PKHCN&HTPT','A03-305','2016-09-26 23:27:09','2016-09-26 23:27:09'),(6,'Phòng Kế hoạch Tài chính','PKHTC','A03-306','2016-09-26 23:27:24','2016-09-26 23:27:24'),(7,'Phòng Công tác sinh viên ','PCTSV','A03-307','2016-09-26 23:27:41','2016-09-26 23:27:41'),(8,'Trung tâm máy tính','TTMT','G2B, 144 Xuân Thủy, Cầu Giấy, Hà nội','2016-12-18 18:40:19','2016-12-18 18:40:19'),(9,'Trung tâm Đảm bảo chất lượng','TTĐBCL','P 208A-E3','2016-12-18 20:01:45','2016-12-18 20:01:45'),(10,'Ban giám hiệu','BGH','Nhà E3','2017-09-20 18:30:29','2017-09-20 18:30:51'),(11,'Khoa Công nghệ Thông tin','Khoa-CNTT','Nhà E3','2017-09-20 18:31:34','2017-09-20 18:31:34'),(12,'Khoa Điện tử Viễn thông','Khoa-ĐTVT','Nhà G2','2017-09-20 18:31:54','2017-09-20 18:31:54'),(13,'Khoa Vật Lý Kỹ thuật & Công nghệ Nano','Khoa-VLKT','Nhà E4','2017-09-20 18:32:30','2017-09-20 18:32:30'),(14,'Khoa Cơ học Kỹ thuật & Tự động hóa','Khoa-CKT','Nhà G2','2017-09-20 18:32:59','2017-09-20 18:32:59');
+/*!40000 ALTER TABLE `departments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -71,17 +52,25 @@ DROP TABLE IF EXISTS `documents`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `documents` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `detail` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `id_author` int(11) NOT NULL,
-  `id_group` int(11) NOT NULL,
-  `id_category` int(11) NOT NULL,
-  `date_time` datetime NOT NULL,
-  `number_download` int(11) NOT NULL DEFAULT '0',
-  `file_location` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `title` mediumtext CHARACTER SET utf8 NOT NULL,
+  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `content` text COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `is_public` tinyint(1) NOT NULL DEFAULT '0',
+  `user_id` int(10) unsigned NOT NULL,
+  `typedoc_id` int(10) unsigned NOT NULL,
+  `date` date DEFAULT NULL,
+  `coquan` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nguoiky` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sohieu` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `documents_user_id_foreign` (`user_id`),
+  KEY `documents_typedoc_id_foreign` (`typedoc_id`),
+  CONSTRAINT `documents_typedoc_id_foreign` FOREIGN KEY (`typedoc_id`) REFERENCES `type_documents` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `documents_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,62 +79,8 @@ CREATE TABLE `documents` (
 
 LOCK TABLES `documents` WRITE;
 /*!40000 ALTER TABLE `documents` DISABLE KEYS */;
-INSERT INTO `documents` VALUES (42,'Phiếu nộp tiền','PNT',20,5,2,'2016-07-28 10:15:17',2,'public/document/HDDGNL_Phieu_nop_tien_122289872.pdf',1),(43,'Đề thi 2015','Đề thi mẫu',10,1,2,'2016-07-28 10:17:17',0,'public/document/PDT_de_thi_2015.pdf',1),(45,'Kế hoạch thực tập hè','HHH',22,1,3,'2016-07-28 10:21:53',0,'public/document/PDT_Ke-hoach-trien-khai-thuc-tap-chuyen-nganh-he-2016.doc',1),(46,'bai tap','bai tap',22,1,4,'2016-07-29 08:49:57',0,'public/document/PDT_bai-tap-chuong-3.doc',-1),(47,'Thời khóa biểu','TKB',22,1,2,'2016-08-03 17:41:37',0,'public/document/PDT_Thoi khoa bieu (2).doc',1);
+INSERT INTO `documents` VALUES (22,'Tài liệu thử','','[BTT] HuongDanThi.pdf','Tài liệu thi',1,2,2,'2017-11-04','abc','ert','123e','2017-09-20 18:51:24','2017-09-20 18:51:24');
 /*!40000 ALTER TABLE `documents` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `group`
---
-
-DROP TABLE IF EXISTS `group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `group` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `can_upload` int(11) NOT NULL DEFAULT '1',
-  `need_check` int(11) NOT NULL DEFAULT '0',
-  `nickname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `group`
---
-
-LOCK TABLES `group` WRITE;
-/*!40000 ALTER TABLE `group` DISABLE KEYS */;
-INSERT INTO `group` VALUES (1,'Phòng đào tạo',1,0,'PDT'),(4,'Phòng nội vụ',0,0,'PNV'),(5,'Hội đồng ĐGNL',1,0,'HĐĐGNL');
-/*!40000 ALTER TABLE `group` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `group_admin`
---
-
-DROP TABLE IF EXISTS `group_admin`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `group_admin` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_group` int(11) NOT NULL,
-  `id_admin` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `group_admin`
---
-
-LOCK TABLES `group_admin` WRITE;
-/*!40000 ALTER TABLE `group_admin` DISABLE KEYS */;
-INSERT INTO `group_admin` VALUES (2,1,22,NULL,NULL);
-/*!40000 ALTER TABLE `group_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -156,11 +91,13 @@ DROP TABLE IF EXISTS `log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `log` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `datetime` datetime NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `create_at` datetime NOT NULL,
+  `IP` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `id_owner` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,7 +106,7 @@ CREATE TABLE `log` (
 
 LOCK TABLES `log` WRITE;
 /*!40000 ALTER TABLE `log` DISABLE KEYS */;
-INSERT INTO `log` VALUES (10,'Duy (admin) đã sửa nhóm NSD \"Phòng nguy hiểm\" thành \"Phòng đào tạo\"','2016-07-21 10:09:38'),(11,'Duy (admin) đã sửa nhóm NSD \"Phòng đào tạo\" chỉ có quyền xem bài','2016-07-21 10:09:38'),(12,'Duy (admin) đã thêm thể loại tài liệu tên: \"Học bổng\"','2016-07-21 10:11:39'),(13,'Duy (admin) đã sửa thể loại tên: \"Quyết định chung\" thành \"Lịch học, lịch thi\"','2016-07-21 10:13:24'),(14,'Duy (admin) đã chấp nhận tài liệu tên: \"Thời khóa biểu\" upload bởi Nguyễn Mạnh Duy','2016-07-21 10:18:44'),(15,'Duy (admin) đã từ chối đăng tài liệu tên: \"Bài tập lớn\" upload bởi Nguyễn Mạnh Duy','2016-07-21 10:19:30'),(16,'Duy (admin) đã xóa người dùng tên: \"Hihi Hi\"','2016-07-21 10:28:18'),(17,'Duy (admin) đã xóa người dùng tên: \"Kiakia\" (Kiakia) thuộc nhóm Sinh viên','2016-07-21 10:31:11'),(18,'Duy (admin) đã thay đổi người dùng tên: \"Nguyễn Mạnh Duy\" (duynm_58) thành quản trị viên','2016-07-21 10:39:35'),(19,'Duy (admin) đã tạm khóa người dùng tên: Nguyễn Mạnh Duy\" (duynm_58) ','2016-07-21 10:41:00'),(20,'Duy (admin) đã thay đổi người dùng tên: \"Nguyễn Mạnh Duy\" (duynm_58) thành người dùng thường','2016-07-21 10:41:22'),(21,'Duy (admin) đã mở khóa người dùng tên: Nguyễn Mạnh Duy\" (duynm_58) ','2016-07-21 10:41:22'),(22,'Duy (admin) đã thay đổi người dùng tên: \"Nguyễn Mạnh Duy\" (duynm_58) thành quản trị viên','2016-07-21 10:42:37'),(23,'Duy (admin) đã tạm khóa người dùng tên: Nguyễn Mạnh Duy\" (duynm_58) ','2016-07-21 10:42:46'),(24,'Duy (admin) đã thêm người dùng tên: \"Kiki\" (yoohoo) thuộc nhóm Sinh viên','2016-07-21 10:44:41'),(25,'Duy (admin) đã thêm 1 người dùng vào nhóm Sinh viên','2016-07-21 10:47:04'),(26,'Duy (admin) đã ẩn tài liệu \"Bài tập lớn\" đăng bởi Nguyễn Mạnh Duy','2016-07-21 10:54:26'),(29,'Duy (admin) đã ẩn tài liệu cá nhân: \"Text 2\"','2016-07-21 10:58:35'),(30,'Duy (admin) đã thêm tài liệu \"Điểm thành phần\"','2016-07-21 17:09:42'),(31,'Duy (admin) đã xóa người dùng tên: \"Nguyễn Mạnh Duy\" (Nguyễn Mạnh Duy) thuộc nhóm Sinh viên','2016-07-21 17:10:47'),(32,'Duy (admin) đã xóa người dùng tên: \"Nguyễn Ngọc Duy\" (Nguyễn Ngọc Duy) thuộc nhóm Sinh viên','2016-07-21 17:10:51'),(33,'Duy (admin) đã thêm 2 người dùng vào nhóm Sinh viên','2016-07-21 17:11:01'),(34,'Duy (admin) đã xóa người dùng tên: \"kokoko\" (kokoko) thuộc nhóm Sinh viên','2016-07-21 17:11:30'),(35,'Duy (admin) đã xóa người dùng tên: \"Nguyễn Ngọc Duy\" (Nguyễn Ngọc Duy) thuộc nhóm Sinh viên','2016-07-21 17:11:34'),(36,'Duy (admin) đã thêm 2 người dùng vào nhóm Sinh viên','2016-07-21 17:11:43'),(37,'Duy (admin) đã xóa người dùng tên: \"kokoko\" (kokoko) thuộc nhóm Sinh viên','2016-07-21 17:12:31'),(38,'Duy (admin) đã xóa người dùng tên: \"Nguyễn Ngọc Duy\" (Nguyễn Ngọc Duy) thuộc nhóm Sinh viên','2016-07-21 17:12:35'),(39,'Duy (admin) đã thêm 2 người dùng vào nhóm Sinh viên','2016-07-21 17:12:40'),(40,'Duy (admin) đã xóa người dùng tên: \"kokoko\" (kokoko) thuộc nhóm Sinh viên','2016-07-21 17:12:56'),(41,'Duy (admin) đã xóa người dùng tên: \"Nguyễn Ngọc Duy\" (Nguyễn Ngọc Duy) thuộc nhóm Sinh viên','2016-07-21 17:13:00'),(42,'Duy (admin) đã thêm 2 người dùng vào nhóm Sinh viên','2016-07-21 17:13:06'),(43,'Duy (admin) đã xóa người dùng tên: \"kokoko\" (duynm_58) thuộc nhóm Phòng đào tạo','2016-07-21 21:05:00'),(44,'Duy (admin) đã thêm 1 người dùng vào nhóm Phòng đào tạo','2016-07-21 21:05:17'),(45,'kokoko (duynm_58) đã thêm tài liệu \"Phiếu nộp tiền \"','2016-07-21 21:05:50'),(46,'Duy (admin) đã thêm tài liệu \"Demo\"','2016-07-22 07:25:37'),(47,'kokoko (duynm_58) đã thêm tài liệu \"aaaa\"','2016-07-22 08:26:35'),(48,'Duy (admin) đã thêm tài liệu \"Thông tin\"','2016-07-22 13:04:49'),(49,'Duy (admin) đã thêm nhóm NSD tên: \"Phòng công tác sinh viên\"','2016-07-26 10:01:12'),(50,'Duy (admin) đã thêm nhóm NSD tên: \"Phòng công tác SV\"','2016-07-26 10:02:37'),(51,'Duy (admin) đã sửa nhóm NSD \"Phòng công tác SV\" thành \"Phòng công tác\"','2016-07-26 10:13:16'),(52,'Duy (admin) đã sửa tên đơn vị \"Hội đồng xét tuyển\" thành \"Hội đồng đánh giá năng lực\"','2016-07-26 10:16:18'),(53,'Duy (admin) đã sửa mã của đơn vị \"Hội đồng xét tuyển\" thành \"HĐĐGNL\"','2016-07-26 10:16:18'),(54,'Duy (admin) đã sửa tên đơn vị \"Hội đồng đánh giá năng lực\" thành \"Hội đồng ĐGNL\"','2016-07-26 10:19:06'),(55,'Duy (admin) đã thêm tài liệu \"hay ho\"','2016-07-26 10:26:41'),(56,'Duy (admin) đã thêm người dùng tên: \"Anh Admin\" (admin_PDT) thuộc nhóm Phòng đào tạo','2016-07-26 16:46:45'),(57,'Duy (admin) đã xóa quyền \"Trưởng đơn vị\" của người dùng tên: Anh Admin\" (admin_PDT) ','2016-07-26 17:15:29'),(58,'Duy (admin) đã chuyển người dùng tên: \"Anh Admin\" (admin_PDT)  thành trưởng đơn vị Phòng đào tạo','2016-07-26 17:24:34'),(59,'Duy (admin) đã chuyển người dùng tên: \"Nguyễn Ngọc Duy\" (duynm_59)  thành trưởng đơn vị Phòng đào tạo','2016-07-26 17:28:48'),(60,'Duy (admin) đã thay đổi người dùng tên: \"Nguyễn Ngọc Duy\" (duynm_59) thành quản trị viên','2016-07-26 17:29:02'),(61,'Duy (admin) đã xóa quyền \"Trưởng đơn vị\" của người dùng tên: \"Nguyễn Ngọc Duy\" (duynm_59) ','2016-07-26 17:29:02'),(62,'Duy (admin) đã thay đổi người dùng tên: \"Nguyễn Ngọc Duy\" (duynm_59) thành thành viên thường','2016-07-26 17:29:25'),(63,'Duy (admin) đã chuyển người dùng tên: \"Nguyễn Ngọc Duy\" (duynm_59)  thành trưởng đơn vị Phòng đào tạo','2016-07-26 17:29:25'),(64,'Duy (admin) đã xóa người dùng tên: \"Nguyễn Ngọc Duy\" (duynm_59) thuộc nhóm Phòng đào tạo','2016-07-26 17:30:06'),(65,'Duy (admin) đã chuyển người dùng tên: \"Kiki\" (yoohoo)  thành trưởng đơn vị Phòng đào tạo','2016-07-26 17:30:20'),(66,'Duy (admin) đã chuyển người dùng tên: \"kokoko\" (duynm_58)  thành trưởng đơn vị Hội đồng ĐGNL','2016-07-26 18:37:56'),(67,'Anh Admin (admin_PDT) đã ẩn tài liệu \"hay ho\" đăng bởi Kiki','2016-07-26 20:32:15'),(68,'Anh Admin (admin_PDT) đã ẩn tài liệu \"hay ho\" đăng bởi Kiki','2016-07-26 20:35:34'),(69,'Anh Admin (admin_PDT) đã xóa tài liệu \"hay ho\" đăng bởi Kiki','2016-07-26 20:36:41'),(70,'kokoko (duynm_58) đã thêm tài liệu \"hehe\"','2016-07-26 20:37:42'),(71,'Duy (admin) đã xóa quyền \"Trưởng đơn vị\" của người dùng tên: \"Kiki\" (yoohoo) ','2016-07-26 20:38:35'),(72,'Anh Admin (admin_PDT) đã ẩn tài liệu cá nhân: \"hehe\"','2016-07-27 14:42:42'),(73,'Anh Admin (admin_PDT) đã ẩn tài liệu nội bộ: \"hehe\" (đăng bởi Kiki)','2016-07-27 14:46:50'),(74,'Kiki (yoohoo) đã ẩn tài liệu cá nhân: \"hehe\"','2016-07-27 14:47:24'),(75,'Anh Admin (admin_PDT) đã ẩn tài liệu nội bộ: \"hehe\" (đăng bởi Kiki)','2016-07-27 14:52:15'),(76,'Anh Admin (admin_PDT) đã xóa tài liệu nội bộ: \"Điểm thành phần\" (đăng bởi Duy)','2016-07-27 14:57:46'),(77,'kokoko (duynm_58) đã ẩn tài liệu cá nhân: \"aaaa\"','2016-07-27 14:59:45'),(78,'kokoko (duynm_58) đã ẩn tài liệu cá nhân: \"aaaa\"','2016-07-27 15:00:09'),(79,'Duy (admin) đã ẩn tài liệu nội bộ: \"hehe\" (đăng bởi Kiki)','2016-07-27 15:11:57'),(80,'Duy (admin) đã xóa tài liệu nội bộ: \"hehe\" (đăng bởi Kiki)','2016-07-27 15:12:17'),(81,'Duy (admin) đã thêm tài liệu \"Danh sách người dùng\"','2016-07-27 17:16:39'),(82,'Duy (admin) đã thêm tài liệu \"Danh sách\"','2016-07-27 17:25:37'),(83,'Duy (admin) đã thêm tài liệu \"btl\"','2016-07-27 17:28:10'),(84,'Duy (admin) đã xóa tài liệu \"btl\" đăng bởi Duy','2016-07-28 10:13:55'),(85,'Duy (admin) đã xóa tài liệu \"Danh sách\" đăng bởi Duy','2016-07-28 10:13:59'),(86,'kokoko (duynm_58) đã thêm tài liệu \"Phiếu nộp tiền\"','2016-07-28 10:15:18'),(87,'Kiki (member_PDT) đã thêm tài liệu \"Đề thi 2015\"','2016-07-28 10:17:18'),(88,'Anh Admin (admin_PDT) đã thêm tài liệu \"Kế hoạch thực tập \"','2016-07-28 10:20:48'),(89,'Anh Admin (admin_PDT) đã xóa tài liệu \"Kế hoạch thực tập \" đăng bởi Anh Admin','2016-07-28 10:21:08'),(90,'Anh Admin (admin_PDT) đã thêm tài liệu \"Kế hoạch thực tập hè\"','2016-07-28 10:21:54'),(91,'Duy (admin) đã thêm người dùng tên: \"Mem\" (member_PNV) thuộc nhóm Phòng nội vụ','2016-07-28 10:43:34'),(92,'Duy (admin) đã thay đổi người dùng tên: \"Mem\" (member_PNV) thành quản trị viên','2016-07-28 10:50:14'),(93,'Duy (admin) đã thay đổi người dùng tên: \"Mem\" (member_PNV) thành thành viên thường','2016-07-28 10:50:44'),(94,'Anh Admin (admin_PDT) đã thêm tài liệu \"bai tap\"','2016-07-29 08:49:58'),(95,'Anh Admin (admin_PDT) đã ẩn tài liệu cá nhân: \"bai tap\"','2016-07-29 08:51:02'),(96,'Anh Admin (admin_PDT) đã thêm tài liệu \"Thời khóa biểu\"','2016-08-03 17:41:37');
+INSERT INTO `log` VALUES (49,'Admin Docman (admin) đã thêm người dùng mới: Hello (phòng Ban Thanh Tra)','2017-11-04 23:00:15','127.0.0.1',2),(50,'Admin Docman (admin) đã sửa thông tin người dùng: Nguyễn Văn Thư','2017-11-04 23:01:31','127.0.0.1',2),(51,'Hello (hello) đã tham gia hệ thống','2017-11-05 21:03:35','127.0.0.1',21),(52,'Admin Docman (admin) đã thêm người dùng mới: Aabc (phòng Phòng Hành chính - Quản trị)','2017-11-05 21:26:40','127.0.0.1',2),(53,'Aabc (abc123a) đã tham gia hệ thống','2017-11-05 21:33:44','127.0.0.1',23),(54,'Aabc (abc123a) đã cập nhật thông tin cá nhân','2017-11-05 21:34:34','127.0.0.1',23);
 /*!40000 ALTER TABLE `log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,8 +129,61 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES ('2014_10_12_000000_create_users_table',1),('2016_07_14_084309_create_documents_table',2),('2016_07_14_085342_create_group_table',2),('2016_07_14_085529_create_category_table',2),('2016_07_14_091342_create_document_group_table',2),('2016_07_21_021822_create_log_table',3),('2016_07_25_032325_create_group_admin_table',4);
+INSERT INTO `migrations` VALUES ('2016_09_19_071659_create_departments_table',1),('2016_09_19_071751_create_roles_table',1),('2016_09_19_071851_create_users_table',1),('2016_09_19_072052_create_type_documents_table',1),('2016_09_19_072208_create_documents_table',1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'admin',NULL,NULL),(2,'manager',NULL,NULL),(3,'user',NULL,NULL);
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `type_documents`
+--
+
+DROP TABLE IF EXISTS `type_documents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `type_documents` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `parent` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `type_documents`
+--
+
+LOCK TABLES `type_documents` WRITE;
+/*!40000 ALTER TABLE `type_documents` DISABLE KEYS */;
+INSERT INTO `type_documents` VALUES (2,'Công Văn',4,'2016-09-26 23:40:57','2016-09-26 23:43:59'),(3,'Quyết định',4,'2016-09-26 23:45:11','2016-09-26 23:45:11'),(4,'Văn bản đi',NULL,NULL,NULL),(5,'Văn bản đến',NULL,NULL,NULL),(6,'Công Văn',5,NULL,NULL),(7,'Quyết định',5,NULL,NULL);
+/*!40000 ALTER TABLE `type_documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -205,16 +195,23 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `id_group` int(11) NOT NULL,
-  `is_admin` int(11) NOT NULL DEFAULT '0',
-  `status` int(11) NOT NULL DEFAULT '1',
-  `main_admin` int(11) NOT NULL DEFAULT '0',
-  `remember_token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'public/images/avatar.png',
+  `role_id` int(10) unsigned NOT NULL DEFAULT '3',
+  `department_id` int(10) unsigned DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `users_role_id_foreign` (`role_id`),
+  KEY `users_department_id_foreign` (`department_id`),
+  CONSTRAINT `users_department_id_foreign` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -224,7 +221,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin','$2y$10$.pViz/0wcK7Zb.stP5wX/uO4ZX4AmWZrywWAOb4zlCya7uQYkcHEC','Duy',5,1,1,1,'SQ1DfHABZ3E55PcoYJfRJlF0o02KQrEEUFywT8TxRDMMnPE6Jds2Q540ZmyK','hihi@gmail.com'),(10,'member_PDT','$2y$10$WPfoC4IaP3y92L9R4huyge7UKTfZ7c47Ko.QkNxWLj5ydZtfMx0Hi','Kiki',1,0,1,0,'4UU8rnIBvmzADlw66O54dGAkEebij8ET5DKOLfKwA17Zw5Y6asPXD4ZrmJJc','ki@g.co'),(20,'member_DGNL','$2y$10$Tyo9/t3YmCyfqY1qp0hmguZltik7vbR2MzOmz3lzKlc6lkrGG6QeG','kokoko',5,0,1,0,'aFONMSMGF7AQUt5yILtRLk17WRSFPtPaIwXv48AvlixOZUosyHmODkeB8eQt','k@gmail.com'),(22,'admin_PDT','$2y$10$u/zOIERKs1vcglzwkZ2hFeissmK3QmlLoKXk9YtCpRAKFl0isazDW','Anh Admin',1,0,1,0,'PFJs6omY7ZdE0725mtLnlz5UovyCwTeb5Bfxv2XtQ8iwepoGehD7Bj6ix84B','kev@gmail.com'),(23,'member_PNV','$2y$10$saAzLoufmkPnbJGKFyRHHeI6zAim.YzhTYucPVqhUeYR11La1GXMS','Mem',4,0,1,0,'XZtkAUBiaIFGFM1jPIN0aYJh9x4Dp1hoTZDeEueUPw6ecmslqxaDSGjMiKnT','mem@mg.gm');
+INSERT INTO `users` VALUES (2,'admin','Admin Docman','kevinkool9x@gmail.com','$2a$04$yTzFTnjuvWGkO6TUrFlblevTPXWG1HBDY15nhUHL6dlnakb33MxAO','public/images/avatar/041702181216544018_219953954807409_1109699905_n.jpg',1,1,'waD3h64OmpOuD3aTbueL9tZnMYVP4CpapSE6OqfDgCTfngQ01I4Irie91byA',0,1,NULL,'2017-11-05 08:13:07'),(10,'ccne','Trung tâm Máy tính','ccne@vnu.edu.vn','$2y$10$J6AuUKnUJfvtmwzNSFuS4e1tYoYCgvFDf2brlHn5DQIycI.PjQWYe','public/images/avatar.png',3,1,'573hpa0Cm2WLbRKIz0kQCgw1zKfm9oT4VLkgEemfk4x669SHYTOTgb2rXt3e',1,1,'2016-12-12 03:07:39','2016-12-18 20:12:41'),(12,'kiendh','Đỗ Hoàng Kiên','kiendh@vnu.edu.vn','$2y$10$mBIm6OX9oY/4GMVrtB7mr.PYP3wWIZfNftMWBPH4R/elfHMnMe8KC','public/images/avatar.png',1,8,'MyfMWoTBaki3jD88kZbWd4YeKmJ63tCkKdlZvp8Sm7IPjWh2c4kaYn2Dkwjn',1,1,'2016-12-18 18:35:10','2016-12-18 20:09:14'),(13,'trienpm','Phạm Minh Triển','trienpm@vnu.edu.vn','$2y$10$ODFSTUsoV2S/xOr9CnpgieTDrXlMFFDUewkd/WFdtNH07uEe43nIq','public/images/avatar.png',3,5,NULL,1,1,'2016-12-18 18:57:03','2016-12-18 18:57:27'),(14,'khoatd',NULL,NULL,'$2y$10$skjv1W3.TJIA5UT3vArU6.w.Xr27UTAYPoLBEU.WXAr3M7dtYbLXi','public/images/avatar.png',3,NULL,'PcAf0hGMFbEYfdLx9oZ4MUJSD3HjWyNzEH8L237lZ4oakH37p08vVdWJccqu',1,1,'2016-12-18 19:57:54','2016-12-18 19:59:27'),(15,'ninhbt','Nguyễn Thị Hồng','hongnt1991@vnu.edu.vn','$2y$10$xwK76EXljdUuoscyjxoxFecWmSDMsYxSIy7AlolNukTs2OrASwDYi','public/images/avatar.png',2,7,'tOmXCeSonjh26nheBDPnrsbKH6vYNazGr8OYGAEzjYff04NTe0s0xVWb5Ypx',1,1,'2016-12-18 19:58:07','2016-12-21 00:43:17'),(16,'hungpd','Pham Duy Hung','hungpd@vnu.edu.vn','$2y$10$/2tNjcHFRFMQHMMZTdpvaevmGAFr6KRPn5nkRd1oGHrC9q9vemzvi','public/images/avatar.png',1,3,NULL,1,1,'2016-12-18 19:58:41','2017-09-28 19:09:11'),(17,'hattt','Trần Thị Thu Hà','hattt@vnu.edu.vn','$2y$10$krRzcLMdoyHKwqApR0SPGehsiA7z92AHhqIIDMFiU94obhELSjBeO','public/images/avatar.png',2,6,'X79UYWbMq34srP6ZvjOny8Eokp62lRLfZtFxIibjiVlNChxKMIFRhjiTkkjf',1,1,'2016-12-19 20:46:55','2016-12-21 00:42:41'),(18,'vietanh','Nguyễn Việt Anh','vietanh@vnu.edu.vn','$2y$10$IykjF3IFWpefKGmjgfc0T.4V9iJM3LI/Stku1tPUnpkhjg3/6ocei','public/images/avatar.png',1,8,'sGUZTeGdqFTC0xIiULktf7EcGeuKb0Y5fjr46SIUJCqDl7aliGDVf9l5UeIj',1,1,'2017-03-01 00:51:41','2017-11-02 21:01:19'),(19,'hanv','Nguyễn Việt Hà','hanv@vnu.edu.vn','$2y$10$TlFU5rZf1sQoUDMGf97UauOXZIbvF6BUM7UqjpPN3CVEIBrHfpOfS','public/images/avatar.png',1,10,NULL,1,1,'2017-09-20 19:38:27','2017-09-25 21:36:05'),(20,'vanthu','Nguyễn Văn Thư','nguyenvanthu@vnu.edu.vn','$2y$10$JgWArc2ZCOe5SqYUUYcTQe6hS8tkbrRCJ0vAoosCGkCmj2SGzbdnK','public/images/avatar.png',2,11,'L6enOiS5WOZWjgSG7FYPitt6yQsUP0zCfxhmVUPuqfaWEO36KtGhRcBPT5su',0,1,'2017-11-02 21:01:10','2017-11-04 09:01:31'),(21,'hello','Hello','bach123@adsfa.adf','$2y$10$JgWArc2ZCOe5SqYUUYcTQe6hS8tkbrRCJ0vAoosCGkCmj2SGzbdnK','public/images/avatar.png',3,1,'xTPKit5idE5PWc1sG9J2ErRT1afb8Isg1KfQtyjxyAX5LhSIIgNVCMWPt8JO',0,1,'2017-11-04 09:00:15','2017-11-05 07:26:55'),(23,'abc123a','Aabc','as@ad.sg','$2y$10$JgWArc2ZCOe5SqYUUYcTQe6hS8tkbrRCJ0vAoosCGkCmj2SGzbdnK','public/images/avatar/0934330511170000092_mach-thu-tia-hong-ngoai-ir-38khz_550.png',3,1,NULL,0,1,'2017-11-05 07:26:40','2017-11-05 14:34:33');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -237,4 +234,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-03 14:00:43
+-- Dump completed on 2017-11-06 16:26:01
