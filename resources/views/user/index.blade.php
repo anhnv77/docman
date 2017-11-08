@@ -14,19 +14,17 @@
         <div class="content-search" >
             
             <div class="row" id="initailPart">
-                <div class="col-md-4 not-padding textsearch">
-                    <div class="search-form form-group">
-                        <input type="text" id="textsearchinput" class="form-control">
-                        <button class="btn btn-primary" id="textsearch">Tìm kiếm</button>
+                <div class="col-md-9 not-padding textsearch">
+                    <div class="search-form ">
+                        <input style="display: inline-block; width: 90%" type="text" id="textsearchinput" class="form-control">
+                        <button style="margin: 13px" class="btn btn-primary" id="textsearch"><i class="fa fa-search"></i></button>
                     </div>
                     <a href="javascript:void(0)" class="pull-left " id="chooseAdvanceSearch">
                         &nbsp <span id="titleButtonSearch"> Tìm kiếm nâng cao </span>
                         &nbsp<span class="caret " id="movationIcon"></span>
                     </a>
                 </div>
-                <div class="col-md-5">
-                    
-                </div>
+
 
                 <div class="col-md-3 not-padding" id="chooseDepartment">
                     <select class='form-control input-sm pull-right parent' id="selectDepartment">
@@ -93,29 +91,29 @@
             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
                 <thead>
                     <tr> 
-                        <th class="center" style="width: 4%" >{{ trans('documents.no') }}</th>
-                        <th class="center" style="width: 5%">{{ trans('documents.file') }}</th>
-                        <th style="width: 19%">{{ trans('documents.title') }}</th>
-                        <th style="width: 10%" class="hidden-xs">Số hiệu</th>
-                        <th style="width: 16%" class="hidden-xs hidden-md hidden-sm">Cơ quan ban hành</th>
-                        <th style="width: 15%" class="hidden-xs hidden-sm">Loại văn bản</th>
-                        <th style="width: 10%" class="hidden-xs hidden-md hidden-sm">Ngày ban hành</th>
-                        <th style="width: 10%" class="hidden-xs hidden-md hidden-sm">Người ký</th>
+                        <th class="center" style="width: 1%" >{{ trans('documents.no') }}</th>
+                        <th class="center" style="width: 2%">{{ trans('documents.file') }}</th>
+                        <th style="width: 8%" class="hidden-xs">Số hiệu</th>
+                        <th style="width: 6%" class="hidden-xs hidden-md hidden-sm">Ngày ban hành</th>
+                        <th style="width: 45%">{{ trans('documents.title') }}</th>
+                        <th style="width: 13%" class="hidden-xs hidden-sm">Loại văn bản</th>
+                        <th style="width: 13%" class="hidden-xs hidden-md hidden-sm">Cơ quan</th>
+                        <th style="width: 12%" class="hidden-xs hidden-md hidden-sm">Người ký</th>
                         
-                        <th style="width: 12%" id="option" class="center" colspan="2">
-                                        
-                            <div class="dropdown">
-                                <a href="javascript:void(0)" class="linkNormal dropdown-toggle" data-toggle="dropdown" style="color: black!important; font-size: 12px">
-                                    Tùy chọn <span class="caret"></span>
-                                </a>
-                                    
-                                <ul class="dropdown-menu ulLeft">
-                                    <li>
-                                        <a href="javascript:void(0)" id="selectDeleteMany">Xóa nhiều tài liệu</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </th>
+                        {{--<th style="width: 12%" id="option" class="center" colspan="2">--}}
+                                        {{----}}
+                            {{--<div class="dropdown">--}}
+                                {{--<a href="javascript:void(0)" class="linkNormal dropdown-toggle" data-toggle="dropdown" style="color: black!important; font-size: 12px">--}}
+                                    {{--Tùy chọn <span class="caret"></span>--}}
+                                {{--</a>--}}
+                                    {{----}}
+                                {{--<ul class="dropdown-menu ulLeft">--}}
+                                    {{--<li>--}}
+                                        {{--<a href="javascript:void(0)" id="selectDeleteMany">Xóa nhiều tài liệu</a>--}}
+                                    {{--</li>--}}
+                                {{--</ul>--}}
+                            {{--</div>--}}
+                        {{--</th>--}}
                     </tr>
 
                     <tr class="rowForDeleteMany">

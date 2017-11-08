@@ -96,7 +96,9 @@ input,select,textarea, button,a {
 .textsearch{
 }
 .search-form{
+    display: inline;
 }
+
 .search-form button{
     margin-top: 7px;
 }

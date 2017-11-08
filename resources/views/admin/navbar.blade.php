@@ -71,7 +71,7 @@
                     <li>
                         <a class="{{ Request::is('admin/dashboard') ? 'seeing-li active' : ''}}"
                            href="{{ url('admin/dashboard') }}">
-                            <i class="fa fa-dashboard"></i> &nbsp{{ trans('layouts.dashboard') }}
+                             &nbsp{{ trans('layouts.dashboard') }}
                         </a>
                     </li>
 
@@ -79,7 +79,7 @@
                     <li>
                         <a class="{{ Request::is('admin/users') || Request::is('admin/users/create') || Request::is('admin/users/*')? 'seeing-li active' : ''}}"
                            href="#">
-                            <i class="fa fa-user"></i> &nbsp&nbsp
+                            </i> &nbsp&nbsp
                             {{ trans('layouts.user') }}
                             <span class="fa arrow"></span>
                         </a>
@@ -87,14 +87,14 @@
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="{{ url('admin/users') }}">
-                                    <i class="fa fa-server fa-fw"></i> &nbsp
-                                    Danh sách người dùng
+                                  &nbsp
+                                    Danh sách
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ url('admin/users/create') }}">
-                                    <i class="fa fa-plus-circle fa-fw"></i> &nbsp
-                                    Thêm người dùng mới
+                                    &nbsp
+                                    Thêm mới
                                 </a>
                             </li>
                         </ul>
@@ -108,14 +108,14 @@
                     <li>
                         <a class="{{ Request::is('document') || Request::is('document/*') || Request::is('document/create') || Request::is('document/edit/*') ? 'seeing-li active' : ''}}"
                            href="#">
-                            <i class="fa fa-book" aria-hidden="true"></i> &nbsp
+                            &nbsp
                             {{ trans('layouts.document') }}
                             <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="{{ url('document') }}">
-                                    <i class="fa fa-server fa-fw"></i> &nbsp
+                                     &nbsp
                                     {{ trans('documents.list_document') }}
                                 </a>
                             </li>
@@ -123,13 +123,13 @@
                             <ul class="nav nav-third-level">
                                 <li>
                                     <a href="{{ url('document',['key'=>4]) }}">
-                                        <i class="fa fa-bank fa-fw"></i> &nbsp
+                                      &nbsp
                                         Văn bản đi
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ url('document',['key'=>5]) }}">
-                                        <i class="fa fa-bank fa-fw"></i> &nbsp
+                                         &nbsp
                                         Văn bản đến
                                     </a>
                                 </li>
@@ -139,7 +139,7 @@
                             @if (auth()->check() && (Auth::user()->hasRole('admin') || Auth::user()->hasRole('manager')))
                                 <li>
                                     <a href="{{ url('document/create') }}">
-                                        <i class="fa fa-upload fa-fw"></i> &nbsp
+                                         &nbsp
                                         {{ trans('documents.add_document') }}
                                     </a>
                                 </li>
@@ -201,7 +201,7 @@
                     <li>
                         <a class="{{ Request::is('admin/logs') ? 'seeing-li active' : ''}}"
                            href="{{URL('admin/logs')}}">
-                            <i class="fa fa-clock-o"></i> &nbsp
+                             &nbsp
                             Lịch sử hệ thống
                         </a>
                     </li>
