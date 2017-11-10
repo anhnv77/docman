@@ -46,6 +46,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' =>
 
     Route::get('users/{key?}', 'UserController@handleAll');
     Route::post('users/getUsersList', 'UserController@getUserList');
+    Route::post('users/deleteUser', 'UserController@deleteUser');
     Route::post('users/changeRoleUser', 'UserController@changeRoleUser');
     Route::post('users/startAddUser', 'UserController@startAddUser');
 
@@ -69,7 +70,7 @@ Route::group(['prefix' => 'manager', 'middleware' => ['auth', 'roles'], 'roles' 
     // Department Management
 
     // 1. users
-    Route::get('users', 'ManagerController@users');
+//    Route::get('users', 'ManagerController@users');
     
     // 2. documents
     Route::get('documents', 'ManagerController@documents');

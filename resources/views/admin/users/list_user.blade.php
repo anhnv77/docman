@@ -81,13 +81,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Phòng trực thuộc </label>
-                        <label class="col-md-5 control-label"> 
-                            <span style="float: left" id="userDepartmentEdit"></span> 
-                        </label>
-                    </div>
-
-                    <div class="form-group">
                         <label class="col-md-4 control-label">Quyền hiện tại </label>
                         <label class="col-md-5 control-label"> 
                             <span style="float: left" id="userValidationEdit"></span> 
@@ -95,24 +88,11 @@
                     </div>
 
                     <div class="form-group" style="margin-top: 30px">
-                        <label class="col-md-4 control-label" for="editDepartment">Sửa phòng </label>
-                        <div class="col-md-5">
-                            <select class="form-control" id="editDepartment">
-                                <?php
-                                    for ($i=0; $i<count($department); $i++){
-                                        echo "<option value = ".$department[$i]->id." selected> ".$department[$i]->alias."</option>";
-                                    }
-                                ?>
-                            </select>
-                        </div>  
-                    </div>
-
-                    <div class="form-group" style="margin-top: 30px">
                         <label class="col-md-4 control-label" for="editValidation">Sửa quyền hệ thống</label>
                         <div class="col-md-5">
                             <select class="form-control" id="editValidation">
                                 <option value=1> Quản lý hệ thống </option>
-                                <option value=2> Quản lý phòng </option>
+                                <option value=2> Đăng Tài liệu </option>
                                 <option value=3> Nhân viên</option>
                             </select>
                         </div>  

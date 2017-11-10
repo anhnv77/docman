@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Document;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,10 +16,11 @@ use File;
 
 class UserController extends Controller
 {
-    public function handleAll($key=""){
-        if ($key == "create"){
+    public function handleAll($key = "")
+    {
+        if ($key == "create") {
             return $this->create();
-        }else{
+        } else {
             return $this->index($key);
         }
     }
@@ -32,12 +34,12 @@ class UserController extends Controller
     {
         $department = Department::all();
         $select = 0;
-        if ($id>0){
+        if ($id > 0) {
             $select = $id;
 
             $test = Department::find($select);
 
-            if ($test ==  false || $test == null){
+            if ($test == false || $test == null) {
                 return redirect("/admin/users");
             }
         }
@@ -50,29 +52,28 @@ class UserController extends Controller
         $department_ID = $R->department_ID;
         $name = $R->key;
 
-        if ($department_ID == 0){
+        if ($department_ID == 0) {
 
-            $data = DB::table('users')->join("departments", 'departments.id', '=', 'users.department_id')
-                                ->select("users.id AS id_user", "username", "users.name AS fullname", "email", "type", "departments.name AS department_name", "departments.alias AS department_alias", "departments.id AS department_id", "users.role_id")
-                                ->get();
-        }else{
+            $data = DB::table('users')
+                ->select("users.id AS id_user", "username", "users.name AS fullname", "email", "type", "users.role_id")
+                ->get();
+        } else {
             $test = Department::find($department_ID);
 
-            if ($test == false || $test == null){
+            if ($test == false || $test == null) {
                 return -1;
             }
 
-            $data = DB::table('users')->join("departments", 'departments.id', '=', 'users.department_id')
-                                ->select("users.id AS id_user", "username", "users.name AS fullname", "email", "departments.name AS department_name", "alias AS department_alias", "departments.id AS department_id", "role_id")
-                                ->where("departments.id", $department_ID)
-                                ->get();
+            $data = DB::table('users')
+                ->select("users.id AS id_user", "username", "users.name AS fullname", "email", "role_id")
+                ->get();
         }
 
         $list = array();
-        if ($data!=false && $data!= null && count($data) > 0){
-            foreach($data as $ele){
-                if ($name!=""){
-                    if (strpos(strtolower($ele->username), strtolower($name)) === false && strpos(strtolower($ele->fullname), strtolower($name)) === false){
+        if ($data != false && $data != null && count($data) > 0) {
+            foreach ($data as $ele) {
+                if ($name != "") {
+                    if (strpos(strtolower($ele->username), strtolower($name)) === false && strpos(strtolower($ele->fullname), strtolower($name)) === false) {
                         continue;
                     }
                 }
@@ -83,15 +84,15 @@ class UserController extends Controller
 
                 $role = DB::table("roles")->where("id", $ele->role_id)->get();
 
-                foreach ($role as $check){
-                    $ele->user_role = ($check->name == "admin" ? "Quản lý hệ thống" : ($check->name == "manager" ? "Quản lý phòng" : "Nhân viên"));
+                foreach ($role as $check) {
+                    $ele->user_role = ($check->name == "admin" ? "Quản lý hệ thống" : ($check->name == "manager" ? "Đăng tài liệu" : "Người dùng"));
                 }
 
                 $online = Auth::user();
 
-                if ($online->hasRole("admin") && $ele->user_role != "Quản lý hệ thống"){
+                if ($online->hasRole("admin")) {
                     $ele->can_modify = 1;
-                }else{
+                } else {
                     $ele->can_modify = 0;
                 }
 
@@ -102,11 +103,12 @@ class UserController extends Controller
         return json_encode($list);
     }
 
-    public function create(){
+    public function create()
+    {
         $data = DB::table("roles")->orderBy('id', 'DESC')->get();
-        $temp = array("", "Quản lý hệ thống", "Đăng bài", "Người dùng");
-        $roles=array();
-        foreach($data as $role){   
+        $temp = array("", "Quản lý hệ thống", "Đăng tài liệu", "Người dùng");
+        $roles = array();
+        foreach ($data as $role) {
             $role->name = $temp[$role->id];
 
             array_push($roles, $role);
@@ -114,55 +116,45 @@ class UserController extends Controller
 
         $data = DB::table("departments")->get();
 
-        $department=array();
-        foreach($data as $ele){   
+        $department = array();
+        foreach ($data as $ele) {
             array_push($department, $ele);
         }
 
         return view("admin.users.create", compact('roles', 'department'));
     }
 
-    public function changeRoleUser(Request $R){
+    public function changeRoleUser(Request $R)
+    {
         $id = $R->id;
 
-        if ($id == null){
+        if ($id == null) {
             return -1;
         }
 
         $user = User::find($id);
 
-        if ($user == null || $user == false || $user->hasRole("admin")){
+        if ($user == null || $user == false) {
             return -2;
         }
 
         $newRole = $R->newRole;
 
-        if ($newRole == null){
+        if ($newRole == null) {
             return -3;
         }
 
         $test = DB::table("roles")->where('id', $newRole)->count();
 
-        if ($test == 0){
+        if ($test == 0) {
             return -4;
         }
 
-        $newDepartment = $R->newDepartment;
-
-        if ($newDepartment == null){
-            return -5;
-        }
-
-        $test = Department::find($newDepartment);
-
-        if ($test == false || $test == null){
-            return -6;
-        }
 
         $newPass = $R->newPass;
 
-        if ($newPass != null && $newPass != ""){
-            if ($user->type == 1){
+        if ($newPass != null && $newPass != "") {
+            if ($user->type == 1) {
                 return -1;
             }
 
@@ -170,7 +162,6 @@ class UserController extends Controller
         }
 
         $user->role_id = $newRole;
-        $user->department_id = $newDepartment;
 
         $user->save();
 
@@ -179,52 +170,53 @@ class UserController extends Controller
         return 1;
     }
 
-    public function startAddUser(Request $R){
-        if ($R->username !== null){
+    public function startAddUser(Request $R)
+    {
+        if ($R->username !== null) {
             $username = app('App\Http\Controllers\HandleAllCaller')->standardString(stripslashes($R->username));
 
-            if ($username == "" || $username == null){
+            if ($username == "" || $username == null) {
                 return -1;
             }
 
             $test = DB::table("users")->where('username', $username)->count();
 
-            if ($test > 0){
+            if ($test > 0) {
                 return "UN founded";
             }
-        }else{
+        } else {
             return -1;
         }
 
-        if ($R->name !== null){
+        if ($R->name !== null) {
             $name = app('App\Http\Controllers\HandleAllCaller')->standardString(stripslashes($R->name));
 
-            if ($name == "" || $name == null){
+            if ($name == "" || $name == null) {
                 return -1;
             }
-        }else{
+        } else {
             return -1;
         }
 
-        if ($R->password !== null){
+        if ($R->password !== null) {
             $password = app('App\Http\Controllers\HandleAllCaller')->standardString(stripslashes($R->password));
 
-            if ($password == "" || $password == null){
+            if ($password == "" || $password == null) {
                 return -1;
             }
-        }else{
+        } else {
             return -1;
         }
 
-        if ($R->id_role !== null){
+        if ($R->id_role !== null) {
             $id_role = $R->id_role;
 
-            $test = DB::table("roles")->where('id',$id_role)->count();
+            $test = DB::table("roles")->where('id', $id_role)->count();
 
-            if ($test == 0){
+            if ($test == 0) {
                 return -1;
             }
-        }else{
+        } else {
             return -1;
         }
 
@@ -247,7 +239,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function showProfile()
@@ -257,11 +249,11 @@ class UserController extends Controller
         $user->numberDocument = DB::table("documents")->where('user_id', $user->id)->count();
         $dp = Department::find($user->department_id);
 
-        if ($user->role_id == 1){
+        if ($user->role_id == 1) {
             $user->nameValidation = "Quản lý hệ thống";
-        }else if ($user->role_id == 2){
+        } else if ($user->role_id == 2) {
             $user->nameValidation = "Quản lý phòng";
-        }else{
+        } else {
             $user->nameValidation = "Người dùng";
         }
 
@@ -270,86 +262,88 @@ class UserController extends Controller
         return view('user.info', compact('user'));
     }
 
-    private function standardNameFile($name_file){
-        $name_file=app('App\Http\Controllers\HandleAllCaller')->standardString($name_file);
-        
-        $name_file= str_replace(array("ă","â","á","à","ả","ã","ạ","ă","ắ","ặ","ằ","ẳ","ẵ","â","ấ","ầ","ẩ","ẫ","ậ"), "a", $name_file);
-        $name_file= str_replace(array("Á","À","Ả","Ã","Ạ","Ă","Ắ","Ặ","Ằ","Ẳ","Ẵ","Â","Ấ","Ầ","Ẩ","Ẫ","Ậ"), "A",$name_file);
-        $name_file= str_replace("đ", "d",$name_file);
-        $name_file= str_replace("Đ", "D",$name_file);
-        $name_file= str_replace(array("ê","é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ"), "e",$name_file);
-        $name_file= str_replace(array("É","È","Ẻ","Ẽ","Ẹ","Ê","Ế","Ề","Ể","Ễ","Ệ"), "E",$name_file);
-        $name_file= str_replace(array("ư","ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự"), "u",$name_file);
-        $name_file= str_replace(array("Ú","Ù","Ủ","Ũ","Ụ","Ư","Ứ","Ừ","Ử","Ữ","Ự"), "U",$name_file);
-        $name_file= str_replace(array("í","ì","ỉ","ĩ","ị"), "i",$name_file);
-        $name_file= str_replace(array("Í","Ì","Ỉ","Ĩ","Ị"), "I",$name_file);
-        $name_file= str_replace(array("ô","ơ","ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ"), "o",$name_file);
-        $name_file= str_replace(array("Ó","Ò","Ỏ","Õ","Ọ","Ô","Ố","Ồ","Ổ","Ỗ","Ộ","Ơ","Ớ","Ờ","Ở","Ỡ","Ợ"), "O",$name_file);
-        $name_file= str_replace(array("ý","ỳ","ỷ","ỹ","ỵ","Ý","Ỳ","Ỷ","Ỹ","Ỵ"), "y",$name_file);
-        return $name_file; 
+    private function standardNameFile($name_file)
+    {
+        $name_file = app('App\Http\Controllers\HandleAllCaller')->standardString($name_file);
+
+        $name_file = str_replace(array("ă", "â", "á", "à", "ả", "ã", "ạ", "ă", "ắ", "ặ", "ằ", "ẳ", "ẵ", "â", "ấ", "ầ", "ẩ", "ẫ", "ậ"), "a", $name_file);
+        $name_file = str_replace(array("Á", "À", "Ả", "Ã", "Ạ", "Ă", "Ắ", "Ặ", "Ằ", "Ẳ", "Ẵ", "Â", "Ấ", "Ầ", "Ẩ", "Ẫ", "Ậ"), "A", $name_file);
+        $name_file = str_replace("đ", "d", $name_file);
+        $name_file = str_replace("Đ", "D", $name_file);
+        $name_file = str_replace(array("ê", "é", "è", "ẻ", "ẽ", "ẹ", "ê", "ế", "ề", "ể", "ễ", "ệ"), "e", $name_file);
+        $name_file = str_replace(array("É", "È", "Ẻ", "Ẽ", "Ẹ", "Ê", "Ế", "Ề", "Ể", "Ễ", "Ệ"), "E", $name_file);
+        $name_file = str_replace(array("ư", "ú", "ù", "ủ", "ũ", "ụ", "ư", "ứ", "ừ", "ử", "ữ", "ự"), "u", $name_file);
+        $name_file = str_replace(array("Ú", "Ù", "Ủ", "Ũ", "Ụ", "Ư", "Ứ", "Ừ", "Ử", "Ữ", "Ự"), "U", $name_file);
+        $name_file = str_replace(array("í", "ì", "ỉ", "ĩ", "ị"), "i", $name_file);
+        $name_file = str_replace(array("Í", "Ì", "Ỉ", "Ĩ", "Ị"), "I", $name_file);
+        $name_file = str_replace(array("ô", "ơ", "ó", "ò", "ỏ", "õ", "ọ", "ô", "ố", "ồ", "ổ", "ỗ", "ộ", "ơ", "ớ", "ờ", "ở", "ỡ", "ợ"), "o", $name_file);
+        $name_file = str_replace(array("Ó", "Ò", "Ỏ", "Õ", "Ọ", "Ô", "Ố", "Ồ", "Ổ", "Ỗ", "Ộ", "Ơ", "Ớ", "Ờ", "Ở", "Ỡ", "Ợ"), "O", $name_file);
+        $name_file = str_replace(array("ý", "ỳ", "ỷ", "ỹ", "ỵ", "Ý", "Ỳ", "Ỷ", "Ỹ", "Ỵ"), "y", $name_file);
+        return $name_file;
     }
 
-    public function editProfile(Request $R){
-        if (Input::hasFile('avatar') && $R->file('avatar')!= null){
-            $file= $R->file('avatar');
+    public function editProfile(Request $R)
+    {
+        if (Input::hasFile('avatar') && $R->file('avatar') != null) {
+            $file = $R->file('avatar');
             $name_file = $this->standardNameFile($file->getClientOriginalName());
 
             date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $time= date("hisdmy");
+            $time = date("hisdmy");
 
             // plus 12 digits:
 
-            $name_file=$time.$name_file;
+            $name_file = $time . $name_file;
 
             $des = "public/images/avatar/";
 
             $file->move($des, $name_file);
 
-            $des = $des.$name_file;
+            $des = $des . $name_file;
 
             $data = Auth::user();
 
-            if ($data->avatar != "public/images/avatar.png"){
-                if (File::exists($data->avatar)){
+            if ($data->avatar != "public/images/avatar.png") {
+                if (File::exists($data->avatar)) {
                     File::delete($data->avatar);
                 }
             }
 
-            $data->avatar=$des;
+            $data->avatar = $des;
 
             $name = app('App\Http\Controllers\HandleAllCaller')->standardString(stripslashes($R->name));
 
-            if ($name == "" || $name == null){
+            if ($name == "" || $name == null) {
                 return -1;
             }
 
             $email = stripslashes($R->email);
 
-            if ($email == "" || $email == null){
+            if ($email == "" || $email == null) {
                 return -1;
             }
 
             $data->name = $name;
             $data->email = $email;
 
-            if ($data->save()){
+            if ($data->save()) {
 
                 app('App\Http\Controllers\LogController')->makeLog(13, array());
 
                 return 1;
-            }else{
+            } else {
                 return -1;
             }
-        }else{
+        } else {
             $name = app('App\Http\Controllers\HandleAllCaller')->standardString(stripslashes($R->name));
 
-            if ($name == "" || $name == null){
+            if ($name == "" || $name == null) {
                 return -1;
             }
 
             $email = app('App\Http\Controllers\HandleAllCaller')->standardString(stripslashes($R->email));
 
-            if ($email == "" || $email == null){
+            if ($email == "" || $email == null) {
                 return -1;
             }
 
@@ -358,39 +352,60 @@ class UserController extends Controller
             $data->name = $name;
             $data->email = $email;
 
-            if ($data->save()){
+            if ($data->save()) {
                 app('App\Http\Controllers\LogController')->makeLog(13, array());
 
                 return 1;
-            }else{
+            } else {
                 return -1;
             }
         }
     }
 
-    public function editPassword(Request $R){
+    public function editPassword(Request $R)
+    {
         $old = $R->pass;
         $new = $R->new_pass;
 
-        if ($old == "" || $old == null){
+        if ($old == "" || $old == null) {
             return -1;
         }
 
-        if (!Hash::check($old, Auth::user()->password)){
+        if (!Hash::check($old, Auth::user()->password)) {
             return -2;
         }
 
-        $data=Auth::user();
+        $data = Auth::user();
 
-        $data->password=Hash::make($new);
+        $data->password = Hash::make($new);
 
-        if ($data->save()){
+        if ($data->save()) {
             app('App\Http\Controllers\LogController')->makeLog(14, array());
 
             return 1;
         }
-        
+
         return -1;
     }
-    
+
+    public function deleteUser(Request $request)
+    {
+        $id = $request->id;
+        if (!isset($id)) {
+            return response()->json(["success" => 0]);
+        }
+        $online = Auth::user();
+        if ($online->hasRole("admin")) {
+            $user = User::where('id', $id)->first();
+            if (isset($user->id)) {
+                Document::where('user_id',$user->id)->delete();
+                $user->delete();
+                return response()->json(["success" => 1]);
+            } else {
+                return response()->json(["success" => 0]);
+            }
+        } else {
+            return response()->json(["success" => 0]);
+        }
+    }
 }

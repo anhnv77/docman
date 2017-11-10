@@ -9,7 +9,7 @@ function writeData(stt,ele){
     // temp += ('<th ><small>'+ele['user_role']+'</small></th>');
     // temp += ('<th class="hidden-xs hidden-md hidden-sm">'+ele['number_document']+'</th>');
     if (ele['can_modify'] == 1){
-        temp += ('<th class="center"><a class="editUsers" data-id="'+ele['id_user']+'" href = "javascript:void(0)" > <i class="fa fa-edit"></i></a></th>');
+        temp += ('<th class="center"><a class="editUsers" data-id="'+ele['id_user']+'" href = "javascript:void(0)" > <i class="fa fa-edit"></i></a><a class="deleteUser" data-id="'+ele['id_user']+'" href = "javascript:void(0)" > <i class="fa fa-remove"></i></a></th>');
     } else{
         temp += ('<th class="center"><small>N/A</small></th>');
     }
@@ -140,7 +140,7 @@ function checkIfUserDoST(){
             }
         }
 
-        if (seeing['can_modify'] != 1 || seeing['user_role'] == "Quản lý hệ thống"){
+        if (seeing['can_modify'] != 1 ){
             alert("Dữ liệu không hợp lệ!");
             window.location.reload();
         }
@@ -150,7 +150,7 @@ function checkIfUserDoST(){
         $('#editDepartment').val(seeing['department_id']);
         var oldRole;
 
-        if (seeing['user_role'] == "Quản lý phòng"){
+        if (seeing['user_role'] == "Đăng tài liệu"){
             oldRole = 2;            
         }else{
             oldRole = 3;
@@ -248,6 +248,43 @@ function notCheckIfUserDoST(){
     });
 }
 
+function deleteUser() {
+    $(document).off('click', '.deleteUser').on('click', '.deleteUser', function(){
+        var id = $(this).data('id');
+
+        var seeing;
+
+        for (var i=(currentPage-1)*perPage; i<listUsers.length && i<currentPage*perPage; i++){
+
+            if (listUsers[i]['id_user'] == id){
+                seeing = listUsers[i];
+                break;
+            }
+        }
+
+        if (seeing['can_modify'] != 1 ){
+            alert("Dữ liệu không hợp lệ!");
+            window.location.reload();
+        }
+
+        var confirm1 = confirm("Bạn có chắc chắn muốn xóa?");
+        if(confirm1){
+            var token = $('#token').val();
+            $.post(link+"/deleteUser",{_token: token,id:id})
+                .done(function (data) {
+                    if(data.success){
+                        alert("Đã xóa tài khoản");
+                        window.location.reload();
+                    }
+                })
+                .fail(function (data) {
+                    alert("Có lỗi xảy ra, Không thể xóa tài khoản");
+                })
+        }
+
+    });
+}
+
 function getDataForUserList(){
     var token = $('#token').val();
     startLoading(); 
@@ -334,6 +371,7 @@ $(document).ready(function(){
     currentPage = 0;
     departmentFilter = $("#selectDepartment").val();
 
+    deleteUser();
     getDataForUserList();
     captureChangeDepartment();
     checkFilterBarUser();
